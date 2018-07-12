@@ -95,5 +95,29 @@ namespace Monefy
             }
             Console.WriteLine("Category with specified ID not found");
         }
+
+        //Print Categories
+        public void PrintCategories()
+        {
+            //Print all Expense type categories
+            Console.WriteLine("Expense:\n");
+            foreach (var item in categories)
+            {
+                if (item.type==Type.Expense)
+                {
+                Console.WriteLine(item.ToString());
+                }
+            }
+            Console.WriteLine("===============================");
+            //Print all Income type categories
+            Console.WriteLine("Income:\n");
+            foreach (var item in categories)
+            {
+                if (item.type == Type.Income)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+        }
     }
 }

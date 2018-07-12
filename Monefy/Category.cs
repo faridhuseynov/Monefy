@@ -20,5 +20,11 @@ namespace Monefy
 
         //money spent on category
         public int MoneySpent { get; set; }
+
+        //override ToString()
+        public override string ToString()
+        {
+            return $"{ID}. {Name}: {MoneySpent}";
+        }
     }
 }
