@@ -47,5 +47,39 @@ namespace Monefy
             //spent money amount subtracted from account's balance
             Money -= money;
         }
+        //Edit category
+        public void EditCategory(int CategoryID)
+        {
+            foreach (var item in categories)
+            {
+                if (item.ID==CategoryID)
+                {
+                    Category temp = new Category();
+                    //set the category name
+                    Console.WriteLine("Enter category name:");
+                    string cat_name = Console.ReadLine();
+                    //set the category type
+                    Console.WriteLine("Select category type\n1.Expense\t2.Income");
+                    ConsoleKeyInfo choice = Console.ReadKey();
+                    if (choice.Key == ConsoleKey.NumPad1 || choice.Key == ConsoleKey.D1)
+                    {
+                        temp.type = Type.Expense;
+                    }
+                    else
+                    {
+                        temp.type = Type.Income;
+                    }
+                    //set category ID
+                    temp.ID = CategoryID;
+                    //set category money spent
+                    temp.MoneySpent = item.MoneySpent;
+                    categories.Remove(item);
+                    categories.Add(temp);
+                    Console.WriteLine("Category successfully edited");
+                    return;
+                }
+            }
+            Console.WriteLine("Category with this ID not found");
+        }
     }
 }
