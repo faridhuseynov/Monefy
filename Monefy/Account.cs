@@ -81,5 +81,19 @@ namespace Monefy
             }
             Console.WriteLine("Category with this ID not found");
         }
+
+        //Delete category
+        public void DeleteCategory(int CategoryID)
+        {
+            foreach (var item in categories)
+            {
+                if (item.ID==CategoryID)
+                {
+                    categories.Remove(item);
+                    return;
+                }
+            }
+            Console.WriteLine("Category with specified ID not found");
+        }
     }
 }
