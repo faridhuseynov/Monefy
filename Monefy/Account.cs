@@ -27,5 +27,25 @@ namespace Monefy
         //list of categories
         List<Category> categories;
 
+        //add new category
+        public void NewCategoryAdd(Category category)
+        {
+            categories.Add(category);
+        }
+         
+        //money being spent 
+        public void SpendOnCategory(int CategoryID, int money)
+        {
+            foreach (var item in categories)
+            {
+                //required category found by CategoryID
+                if (item.ID==CategoryID)
+                {
+                    item.MoneySpent += money;
+                }
+            }
+            //spent money amount subtracted from account's balance
+            Money -= money;
+        }
     }
 }
