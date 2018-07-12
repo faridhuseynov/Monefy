@@ -10,6 +10,7 @@ namespace Monefy
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
