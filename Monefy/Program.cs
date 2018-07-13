@@ -16,12 +16,16 @@ namespace Monefy
         static List<Account> accounts = new List<Account>();
         static void Main(string[] args)
         {
-            Account a = new Account { Name = "AZN CASH", ID = 1, Currency = CURR.AZN, Money = 500 };
+            Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500 };
             accounts.Add(a);
             accounts[0].SpendOnCategory(2,200);
             foreach (var item in accounts)
             {
-            Console.WriteLine(item.ToString()); 
+                Console.WriteLine(item.ToString());
+                foreach (var item2 in accounts[0].categories)
+                {
+                    Console.WriteLine(item2.ToString());
+                }
             }
             
         }

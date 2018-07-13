@@ -9,10 +9,10 @@ namespace Monefy
     class Operations
     {
         //account ID 
-        public int AccountID { get; set; }
+        public int ID_Account { get; set; }
 
         //category ID
-        public int CategoryID { get; set; }
+        public int ID_Category { get; set; }
 
         //spent money on category
         public int MoneySpent { get; set; }
