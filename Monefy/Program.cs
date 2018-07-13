@@ -9,6 +9,7 @@ namespace Monefy
 
     class Program
     {
+        static int Current_Account_ID;
         static List<Account> accounts = new List<Account>();
         static public void StartScreen()
         {
@@ -29,6 +30,7 @@ namespace Monefy
             accounts[0].SpendOnCategory(2, 200);
         }
 
+        //static function to add new account
         static public void AddAccount()
         {
             Console.WriteLine("Enter the account name:");
@@ -50,9 +52,44 @@ namespace Monefy
             accounts.Add(new Account { Name = name, Money = money, Currency = cURR, HiddenBalance = hidden, Account_ID = id });
         }
 
+        //static function to add spending
+        static public void SpendMoney()
+        {
+            //if no accounts yet, first add account
+            if (accounts.Count == 0)
+            {
+                AddAccount();
+                //get account ID to work with
+                Current_Account_ID = 1;
+            }
+            //if accounts already exist work with existing or add new one
+            else
+            {
+                foreach (var item in accounts)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+                Console.WriteLine("======================");
+            }
+            Console.WriteLine($"Select the account ID or add new account by entering {accounts.Count + 1} :");
+            Current_Account_ID = Int32.Parse(Console.ReadLine());
+            //add new account
+            if (Current_Account_ID == accounts.Count + 1)
+                AddAccount();
+            //print the categories list for user's choice
+            foreach (var item in accounts[Current_Account_ID].categories)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            Console.WriteLine("Select the ID of the category:");
+            int Category_ID = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Select the money spent:");
+            int money = Int32.Parse(Console.ReadLine());
+            //category spending add
+            accounts[Current_Account_ID - 1].SpendOnCategory(Category_ID,money);
+        }
         static void Main(string[] args)
         {
-
             ConsoleKeyInfo choice;
             InitialData();
             while (true)
@@ -62,10 +99,7 @@ namespace Monefy
                 choice = Console.ReadKey(true);
                 if (choice.Key==ConsoleKey.NumPad1|| choice.Key == ConsoleKey.D1)
                 {
-                    if (accounts.Count==0)
-                    {
-                        AddAccount();
-                    }
+
 
                 }
                 else if (choice.Key == ConsoleKey.NumPad2 || choice.Key == ConsoleKey.D2)
