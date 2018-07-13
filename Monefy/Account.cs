@@ -30,7 +30,7 @@ namespace Monefy
         //override ToString
         public override string ToString()
         {
-            return $"Account: {Name}\tID:{ID}\nBalance: {Money}{Currency.ToString()}"; 
+            return $"Account: {Name}\nID:{ID}\nBalance: {Money}{Currency.ToString()}"; 
         }
         //add new category
         public void NewCategoryAdd(Category category)
