@@ -25,8 +25,13 @@ namespace Monefy
         public int ID { get; set; }
 
         //list of categories
-        List<Category> categories;
+        public List<Category> categories;
 
+        //override ToString
+        public override string ToString()
+        {
+            return $"Account: {Name}\tID:{ID}\nBalance: {Money}{Currency.ToString()}"; 
+        }
         //add new category
         public void NewCategoryAdd(Category category)
         {
