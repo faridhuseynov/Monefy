@@ -25,8 +25,30 @@ namespace Monefy
         public int ID { get; set; }
 
         //list of categories
-        public List<Category> categories=new List<Category>();
+        List<Category> categories;
 
+        //constructor for account
+        public Account() {
+            List<Category> categories = new List<Category>()
+            {
+            new Category { Name="TAXI",ID=1,type=Type.Expense},
+            new Category { Name="BILL",ID=2,type=Type.Expense},
+            new Category { Name="HOUSE",ID=3,type=Type.Expense},
+            new Category { Name="EATING OUT",ID=4,type=Type.Expense},
+            new Category { Name="TOILETRY",ID=5,type=Type.Expense},
+            new Category { Name="SPORTS",ID=6,type=Type.Expense},
+            new Category { Name="CLOTHES",ID=7,type=Type.Expense},
+            new Category { Name="HEALTH",ID=8,type=Type.Expense},
+            new Category { Name="ENTERTAINMENT",ID=9,type=Type.Expense},
+            new Category { Name="TRANSPORT",ID=10,type=Type.Expense},
+            new Category { Name="CAR",ID=11,type=Type.Expense},
+            new Category { Name="FOOD",ID=12,type=Type.Expense},
+            new Category { Name="OTHER",ID=13,type=Type.Expense},
+            new Category { Name="SALARY",ID=14,type=Type.Income},
+            new Category { Name="OTHER",ID=12,type=Type.Income}
+        };
+        }
+    
         //list of the Operations
         public List<Operations> ops=new List<Operations>();
 
