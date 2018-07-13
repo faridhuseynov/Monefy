@@ -25,7 +25,10 @@ namespace Monefy
         public int ID { get; set; }
 
         //list of categories
-        public List<Category> categories;
+        public List<Category> categories=new List<Category>();
+
+        //list of the Operations
+        public List<Operations> ops=new List<Operations>();
 
         //override ToString
         public override string ToString()
