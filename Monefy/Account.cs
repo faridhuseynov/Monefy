@@ -64,11 +64,15 @@ namespace Monefy
             categories.Add(category);
         }
         
+        //function OpsAdd
         public void OpsAdd(int CategoryID, int money, CURR currency)
         {
+            //set the time to current time by default, will be changed later to have option of changing the date
             DateTime opsdate = DateTime.Now;
+            //note of operation added
             Console.WriteLine("Enter the note for the operation");
             string note = Console.ReadLine();
+            //operation added to the list of operations
             Ops.Add(new Operations { ID_Account = this.Account_ID, ID_Category = CategoryID, MoneySpent = money, OpsCurrency = currency,Note=note });
         }
 
