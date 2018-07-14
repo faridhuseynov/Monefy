@@ -19,7 +19,7 @@ namespace Monefy
         public int ID { get; set; }
 
         //money spent on category
-        public int MoneySpent { get; set; }
+        public double MoneySpent { get; set; }
 
         //override ToString()
         public override string ToString()

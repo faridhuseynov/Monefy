@@ -13,13 +13,13 @@ namespace Monefy
         public string Name { get; set; }
 
         //account's money amount
-        public int Money { get; set; }
+        public double Money { get; set; }
 
         //account's money currency
         public CURR Currency { get; set; }
 
         //account's hidden balance
-        public int HiddenBalance { get; set; }
+        public double HiddenBalance { get; set; }
 
         //accounts ID
         public int Account_ID { get; set; }
@@ -67,7 +67,7 @@ namespace Monefy
             categories.Add(category);
         }
         //function OpsAdd
-        public void OpsAdd(int CategoryID, int money, CURR currency)
+        public void OpsAdd(int CategoryID, double money, CURR currency)
         {
             //set the time to current time by default, will be changed later to have option of changing the date
             DateTime opsdate = DateTime.Now;
@@ -79,8 +79,12 @@ namespace Monefy
         }
 
         //money being spent 
-        public void SpendOnCategory( int CategoryID, int money,CURR currency)
+        public void SpendOnCategory( int CategoryID, double money,CURR currency)
         {
+            if (Currency!=currency)
+            {
+                money *= Exchange[currency.ToString()];
+            }
             foreach (var item in categories)
             {
                 //required category found by CategoryID
@@ -91,6 +95,7 @@ namespace Monefy
             }
             //spent money amount subtracted from account's balance
             Money -= money;
+            OpsAdd(CategoryID, money, currency);
         }
         //Edit category
         public void EditCategory(int CategoryID)

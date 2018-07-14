@@ -15,7 +15,7 @@ namespace Monefy
         public int ID_Category { get; set; }
 
         //spent money on category
-        public int MoneySpent { get; set; }
+        public double MoneySpent { get; set; }
 
         //date of the operation
         public DateTime date { get; set; } = new DateTime();
