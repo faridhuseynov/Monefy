@@ -51,7 +51,7 @@ namespace Monefy
         }
     
         //list of the Operations
-        public List<Operations> ops=new List<Operations>();
+        public List<Operations> Ops=new List<Operations>();
 
         //override ToString
         public override string ToString()
@@ -63,9 +63,17 @@ namespace Monefy
         {
             categories.Add(category);
         }
-         
+        
+        public void OpsAdd(int CategoryID, int money, CURR currency)
+        {
+            DateTime opsdate = DateTime.Now;
+            Console.WriteLine("Enter the note for the operation");
+            string note = Console.ReadLine();
+            Ops.Add(new Operations { ID_Account = this.Account_ID, ID_Category = CategoryID, MoneySpent = money, OpsCurrency = currency,Note=note });
+        }
+
         //money being spent 
-        public void SpendOnCategory(int CategoryID, int money)
+        public void SpendOnCategory( int CategoryID, int money,CURR currency)
         {
             foreach (var item in categories)
             {

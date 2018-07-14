@@ -77,7 +77,7 @@ namespace Monefy
             if (Current_Account_ID == accounts.Count + 1)
                 AddAccount();
             //print the categories list for user's choice
-            foreach (var item in accounts[Current_Account_ID].categories)
+            foreach (var item in accounts[Current_Account_ID-1].categories)
             {
                 Console.WriteLine(item.ToString());
             }
@@ -97,10 +97,10 @@ namespace Monefy
                 Console.Clear();
                 StartScreen();
                 choice = Console.ReadKey(true);
-                if (choice.Key==ConsoleKey.NumPad1|| choice.Key == ConsoleKey.D1)
+                if (choice.Key == ConsoleKey.NumPad1 || choice.Key == ConsoleKey.D1)
                 {
-
-
+                    SpendMoney();
+                    Console.ReadKey();
                 }
                 else if (choice.Key == ConsoleKey.NumPad2 || choice.Key == ConsoleKey.D2)
                 {
@@ -110,22 +110,24 @@ namespace Monefy
                 {
 
                 }
-                else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D4)
+                else if (choice.Key == ConsoleKey.NumPad4 || choice.Key == ConsoleKey.D4)
                 {
 
                 }
-                else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D5)
+                else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
                 {
 
                 }
-                else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D6)
+                else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
                 {
 
                 }
-                else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D7)
+                else if (choice.Key == ConsoleKey.NumPad7 || choice.Key == ConsoleKey.D7)
                 {
 
                 }
+                else
+                    Environment.Exit(0);
             }
             //foreach (var item in accounts)
             //{
