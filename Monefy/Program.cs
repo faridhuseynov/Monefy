@@ -85,11 +85,13 @@ namespace Monefy
             int Category_ID = Int32.Parse(Console.ReadLine());
             Console.WriteLine("Select the money spent:");
             int money = Int32.Parse(Console.ReadLine());
+
             //category spending add
             accounts[Current_Account_ID - 1].SpendOnCategory(Category_ID,money);
         }
         static void Main(string[] args)
         {
+            
             ConsoleKeyInfo choice;
             InitialData();
             while (true)

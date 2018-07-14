@@ -43,7 +43,10 @@ namespace Monefy
             new Category { Name="SALARY",ID=14,type=Type.Income},
             new Category { Name="OTHER",ID=15,type=Type.Income}
         };
+        //static dictionary for the currencies
+        static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
 
+        
         //constructor for account
         public Account()
         {
@@ -63,7 +66,6 @@ namespace Monefy
         {
             categories.Add(category);
         }
-        
         //function OpsAdd
         public void OpsAdd(int CategoryID, int money, CURR currency)
         {
