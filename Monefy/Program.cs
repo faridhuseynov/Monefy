@@ -99,7 +99,7 @@ namespace Monefy
         static public void SpendMoney()
         {
             Console.WriteLine("Enter the money spent:");
-            int money = Int32.Parse(Console.ReadLine());
+            double money = Double.Parse(Console.ReadLine());
             //select currency of spent money
             Console.WriteLine("Select the currency of spent money:\n1.AZN\t2.USD\t3.EURO");
             ConsoleKeyInfo select = Console.ReadKey(true);
@@ -135,26 +135,12 @@ namespace Monefy
                 }
             }
             //select category type
-            Console.WriteLine("Select category type:\n1.Expense\t2.Income");
-            ConsoleKeyInfo category_select = Console.ReadKey();
-            Type category_type = new Type();
-            var category_list = new List<Category>();
-            if (category_select.Key == ConsoleKey.D1 || category_select.Key == ConsoleKey.NumPad1)
-            {
-                category_type = Type.Expense;
                 category_list = accounts[Current_Account_ID - 1].categories_expense;
-            }
-            else
-            {
-                category_type = Type.Income;
-                category_list = accounts[Current_Account_ID - 1].categories_income;
-            }
             //category spending add
-            accounts[Current_Account_ID - 1].SpendOnCategory(category_list,category_type,money,cURR);
+            accounts[Current_Account_ID - 1].SpendOnCategory(category_list,Type.Expense,money,cURR);
         }
         static void Main(string[] args)
         {
-            
             ConsoleKeyInfo choice;
             //InitialData();
             while (true)
@@ -232,6 +218,7 @@ namespace Monefy
                         int id = Int32.Parse(Console.ReadLine());
                         SelectAccount(id);
                     }
+                    accounts[Current_Account_ID-1].PrintCategories();
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                 }

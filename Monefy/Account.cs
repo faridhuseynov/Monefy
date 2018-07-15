@@ -45,7 +45,7 @@ namespace Monefy
         {
             new Category { Name="SALARY",ID=1,type=Type.Income },
             new Category { Name="DEPOSITS",ID=2,type=Type.Income},
-            new Category { Name="SAVINGS",ID=2,type=Type.Income }
+            new Category { Name="SAVINGS",ID=3,type=Type.Income }
         };
         //static dictionary for the currencies
         static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
@@ -148,7 +148,7 @@ namespace Monefy
                     string cat_name = Console.ReadLine();
                     //set the category type
                     Console.WriteLine("Select category type\n1.Expense\t2.Income");
-                    ConsoleKeyInfo choice = Console.ReadKey();
+                    ConsoleKeyInfo choice = Console.ReadKey(true);
                     if (choice.Key == ConsoleKey.NumPad1 || choice.Key == ConsoleKey.D1)
                     {
                         temp.type = Type.Expense;
