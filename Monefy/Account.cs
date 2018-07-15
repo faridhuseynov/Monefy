@@ -47,8 +47,8 @@ namespace Monefy
             new Category { Name="DEPOSITS",ID=2,type=Type.Income},
             new Category { Name="SAVINGS",ID=2,type=Type.Income }
         };
-//static dictionary for the currencies
-static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
+        //static dictionary for the currencies
+        static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
 
         
         //constructor for account
@@ -93,7 +93,10 @@ static public Dictionary<string, double> Exchange = new Dictionary<string, doubl
             //check whether spent currency is the same with accounts currency
             if (Currency!=currency)
             {
-                money *= Exchange[currency.ToString()];
+                if(Currency==CURR.AZN)
+                    money *= Exchange[currency.ToString()];
+                else
+                    money /= Exchange[currency.ToString()];
             }
             //print the categories list for user's choice
             foreach (var item in categories)

@@ -36,6 +36,7 @@ namespace Monefy
         //    accounts.Add(a);
         //    accounts[0].SpendOnCategory(accounts[0].categories_expense,Type.Expense,200,CURR.AZN);
         //}
+        //account list print
         static public void PrintAllAccounts()
         {
             foreach (var item in accounts)
@@ -113,10 +114,9 @@ namespace Monefy
             //if no accounts yet, first add account
             if (accounts.Count == 0)
             {
-                AddAccount(accounts.Count+1);
+                AddAccount(1);
                 //get account ID to work with
                 Current_Account_ID = 1;
-                accounts[0].Currency = cURR;
             }
             //if accounts already exist work with existing or add new one
             else
@@ -126,14 +126,14 @@ namespace Monefy
                     Console.WriteLine(item.ToString());
                 }
                 Console.WriteLine("======================");
-            }
-            Console.WriteLine($"Select the account ID or add new account by entering {accounts.Count + 1} :");
-            Current_Account_ID = Int32.Parse(Console.ReadLine());
-            //add new account
-            if (Current_Account_ID == accounts.Count + 1)
-            {
-                AddAccount(accounts.Count+1);
-                accounts[accounts.Count].Currency = cURR;
+                Console.WriteLine($"Select the account ID or add new account by entering {accounts.Last().Account_ID + 1} :");
+                Current_Account_ID = Int32.Parse(Console.ReadLine());
+                //add new account
+                if (Current_Account_ID == accounts.Last().Account_ID + 1)
+                {
+                    AddAccount(Current_Account_ID);
+                    accounts[accounts.Count].Currency = cURR;
+                }
             }
             //select category type
             Console.WriteLine("Select category type:\n1.Expense\t2.Income");
@@ -219,17 +219,26 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad4 || choice.Key == ConsoleKey.D4)
                 {
-
-                }
-                else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
-                {
-                    if (accounts.Count==0)
+                    if (accounts.Count == 0)
                     {
                         Console.WriteLine("No account found. Add account first");
                         AddAccount(1);
                         Current_Account_ID = 1;
                     }
-                    if (Current_Account_ID == 0) { }
+                    else if (accounts.Count != 0 && Current_Account_ID == 0)
+                    {
+                        Console.WriteLine("You have not chosen the account to work with, please select account first");
+                        PrintAllAccounts();
+                        Console.WriteLine("Select ID of the account");
+                        int id = Int32.Parse(Console.ReadLine());
+                        SelectAccount(id);
+                    }
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                }
+                else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
+                {
+                    
 
                 }
                 else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
