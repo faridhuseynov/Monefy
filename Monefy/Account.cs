@@ -25,7 +25,7 @@ namespace Monefy
         public int Account_ID { get; set; }
 
         //list of categories
-        public List<Category> categories = new List<Category>()
+        public List<Category> categories_expense = new List<Category>()
             {
             new Category { Name=" TAXI",ID=1,type=Type.Expense},
             new Category { Name=" BILL",ID=2,type=Type.Expense},
@@ -40,11 +40,14 @@ namespace Monefy
             new Category { Name="CAR",ID=11,type=Type.Expense},
             new Category { Name="FOOD",ID=12,type=Type.Expense},
             new Category { Name="OTHER",ID=13,type=Type.Expense},
-            new Category { Name="SALARY",ID=14,type=Type.Income},
+        };
+        public List<Category> categories_income = new List<Category>()
+        {
+            new Category { Name="SALARY",ID=14,type=Type.Income },
             new Category { Name="OTHER",ID=15,type=Type.Income}
         };
-        //static dictionary for the currencies
-        static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
+//static dictionary for the currencies
+static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
 
         
         //constructor for account
@@ -62,9 +65,15 @@ namespace Monefy
             return $"Account: {Name}\nID:{Account_ID}\nBalance: {Money}{Currency.ToString()}"; 
         }
         //add new category
-        public void NewCategoryAdd(Category category)
+        public void NewCategoryAdd()
         {
-            categories.Add(category);
+            Category category = new Category();
+            Console.WriteLine("Select category type:\n1.Expense\t2.Income");
+            ConsoleKeyInfo category_select = Console.ReadKey();
+            if (category_select.Key == ConsoleKey.D1 || category_select.Key == ConsoleKey.NumPad1)
+                categories_expense.Add(category);
+            else
+                categories_income.Add(category);
         }
         //function OpsAdd
         public void OpsAdd(int CategoryID, double money, CURR currency)
@@ -79,26 +88,40 @@ namespace Monefy
         }
 
         //money being spent 
-        public void SpendOnCategory( int CategoryID, double money,CURR currency)
+        public void SpendOnCategory(List<Category> categories,Type category_type, double money,CURR currency)
         {
+            //check whether spent currency is the same with accounts currency
             if (Currency!=currency)
             {
                 money *= Exchange[currency.ToString()];
             }
+            //print the categories list for user's choice
+            foreach (var item in categories)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            Console.WriteLine($"Select the ID of the category or enter {categories.Count} to add new category:");
+            int Category_ID = Int32.Parse(Console.ReadLine());
+            if (Category_ID == categories.Count)
+                NewCategoryAdd();
             foreach (var item in categories)
             {
                 //required category found by CategoryID
-                if (item.ID==CategoryID)
+                if (item.ID==Category_ID)
                 {
                     item.MoneySpent += money;
                 }
             }
-            //spent money amount subtracted from account's balance
-            Money -= money;
-            OpsAdd(CategoryID, money, currency);
+            //money amount subtracted from account's balance if expense 
+            if (category_type == Type.Expense)
+                Money -= money;
+            //money amount added to account's balance if income
+            else
+                Money += money;
+            OpsAdd(Category_ID, money, currency);
         }
         //Edit category
-        public void EditCategory(int CategoryID)
+        public void EditCategory(List<Category> categories, int CategoryID)
         {
             foreach (var item in categories)
             {
@@ -133,7 +156,7 @@ namespace Monefy
         }
 
         //Delete category
-        public void DeleteCategory(int CategoryID)
+        public void DeleteCategory(List<Category> categories, int CategoryID)
         {
             foreach (var item in categories)
             {
@@ -151,22 +174,16 @@ namespace Monefy
         {
             //Print all Expense type categories
             Console.WriteLine("Expense:\n");
-            foreach (var item in categories)
+            foreach (var item in categories_expense)
             {
-                if (item.type==Type.Expense)
-                {
                 Console.WriteLine(item.ToString());
-                }
             }
             Console.WriteLine("===============================");
             //Print all Income type categories
             Console.WriteLine("Income:\n");
-            foreach (var item in categories)
+            foreach (var item in categories_income)
             {
-                if (item.type == Type.Income)
-                {
                     Console.WriteLine(item.ToString());
-                }
             }
         }
     }

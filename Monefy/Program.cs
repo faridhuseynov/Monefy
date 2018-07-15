@@ -25,9 +25,9 @@ namespace Monefy
 
         static public void InitialData()
         {
-            Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500 };
+            Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500};
             accounts.Add(a);
-            accounts[0].SpendOnCategory(2, 200,CURR.AZN);
+            accounts[0].SpendOnCategory(accounts[0].categories_expense,Type.Expense,200,CURR.AZN);
         }
 
         //static function to add new account
@@ -55,12 +55,25 @@ namespace Monefy
         //static function to add spending
         static public void SpendMoney()
         {
+            Console.WriteLine("Enter the money spent:");
+            int money = Int32.Parse(Console.ReadLine());
+            //select currency of spent money
+            Console.WriteLine("Select the currency of spent money:\n1.AZN\t2.USD\t3.EURO");
+            ConsoleKeyInfo select = Console.ReadKey(true);
+            CURR cURR = new CURR();
+            if (select.Key == ConsoleKey.D1 || select.Key == ConsoleKey.NumPad1)
+                cURR = CURR.AZN;
+            if (select.Key == ConsoleKey.D2 || select.Key == ConsoleKey.NumPad2)
+                cURR = CURR.USD;
+            if (select.Key == ConsoleKey.D3 || select.Key == ConsoleKey.NumPad3)
+                cURR = CURR.EURO;
             //if no accounts yet, first add account
             if (accounts.Count == 0)
             {
                 AddAccount();
                 //get account ID to work with
                 Current_Account_ID = 1;
+                accounts[0].Currency = cURR;
             }
             //if accounts already exist work with existing or add new one
             else
@@ -75,28 +88,27 @@ namespace Monefy
             Current_Account_ID = Int32.Parse(Console.ReadLine());
             //add new account
             if (Current_Account_ID == accounts.Count + 1)
-                AddAccount();
-            //print the categories list for user's choice
-            foreach (var item in accounts[Current_Account_ID-1].categories)
             {
-                Console.WriteLine(item.ToString());
+                AddAccount();
+                accounts[accounts.Count].Currency = cURR;
             }
-            Console.WriteLine("Select the ID of the category:");
-            int Category_ID = Int32.Parse(Console.ReadLine());
-            Console.WriteLine("Select the money spent:");
-            int money = Int32.Parse(Console.ReadLine());
-            //select currency of spent money
-            Console.WriteLine("Select the currency of spent money:");
-            ConsoleKeyInfo select = Console.ReadKey(true);
-            CURR cURR=new CURR();
-            if (select.Key == ConsoleKey.D1 || select.Key == ConsoleKey.NumPad1)
-                cURR = CURR.AZN;
-            if (select.Key == ConsoleKey.D2 || select.Key == ConsoleKey.NumPad2)
-                cURR = CURR.USD;
-            if (select.Key == ConsoleKey.D3 || select.Key == ConsoleKey.NumPad3)
-                cURR = CURR.EURO;
+            //select category type
+            Console.WriteLine("Select category type:\n1.Expense\t2.Income");
+            ConsoleKeyInfo category_select = Console.ReadKey();
+            Type category_type = new Type();
+            var category_list = new List<Category>();
+            if (category_select.Key == ConsoleKey.D1 || category_select.Key == ConsoleKey.NumPad1)
+            {
+                category_type = Type.Expense;
+                category_list = accounts[Current_Account_ID - 1].categories_expense;
+            }
+            else
+            {
+                category_type = Type.Income;
+                category_list = accounts[Current_Account_ID - 1].categories_income;
+            }
             //category spending add
-            accounts[Current_Account_ID - 1].SpendOnCategory(Category_ID,money,cURR);
+            accounts[Current_Account_ID - 1].SpendOnCategory(category_list,category_type,money,cURR);
         }
         static void Main(string[] args)
         {
@@ -111,6 +123,7 @@ namespace Monefy
                 if (choice.Key == ConsoleKey.NumPad1 || choice.Key == ConsoleKey.D1)
                 {
                     SpendMoney();
+                    Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                 }
                 else if (choice.Key == ConsoleKey.NumPad2 || choice.Key == ConsoleKey.D2)
