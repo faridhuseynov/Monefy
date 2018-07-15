@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Monefy
 {
-
     class Program
     {
         static int Current_Account_ID;

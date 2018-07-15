@@ -95,8 +95,20 @@ namespace Monefy
             {
                 if(Currency==CURR.AZN)
                     money *= Exchange[currency.ToString()];
-                else
-                    money /= Exchange[currency.ToString()];
+                else if(Currency==CURR.USD){
+                    if (currency==CURR.AZN)
+                        money /= Exchange[Currency.ToString()];
+                    else
+                        money=money*Exchange[currency.ToString()]/Exchange["USD"];
+                    }
+                 else if(Currency==CURR.EURO){
+                    if (currency==CURR.AZN)
+                        money /= Exchange[Currency.ToString()];
+                    else
+                        money=money*Exchange[currency.ToString()]/Exchange["EURO"];
+                    }
+                    
+
             }
             //print the categories list for user's choice
             foreach (var item in categories)
