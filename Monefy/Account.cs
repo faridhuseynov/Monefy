@@ -75,7 +75,7 @@ namespace Monefy
             Console.WriteLine("Enter the note for the operation");
             string note = Console.ReadLine();
             //operation added to the list of operations
-            Ops.Add(new Operations { ID_Account = this.Account_ID, ID_Category = CategoryID, MoneySpent = money, OpsCurrency = currency,Note=note });
+            Ops.Add(new Operations { ID_Account = Account_ID, ID_Category = CategoryID, MoneySpent = money, OpsCurrency = currency,Note=note });
         }
 
         //money being spent 

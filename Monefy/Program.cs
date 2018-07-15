@@ -27,7 +27,7 @@ namespace Monefy
         {
             Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500 };
             accounts.Add(a);
-            accounts[0].SpendOnCategory(2, 200);
+            accounts[0].SpendOnCategory(2, 200,CURR.AZN);
         }
 
         //static function to add new account
@@ -85,9 +85,18 @@ namespace Monefy
             int Category_ID = Int32.Parse(Console.ReadLine());
             Console.WriteLine("Select the money spent:");
             int money = Int32.Parse(Console.ReadLine());
-
+            //select currency of spent money
+            Console.WriteLine("Select the currency of spent money:");
+            ConsoleKeyInfo select = Console.ReadKey(true);
+            CURR cURR=new CURR();
+            if (select.Key == ConsoleKey.D1 || select.Key == ConsoleKey.NumPad1)
+                cURR = CURR.AZN;
+            if (select.Key == ConsoleKey.D2 || select.Key == ConsoleKey.NumPad2)
+                cURR = CURR.USD;
+            if (select.Key == ConsoleKey.D3 || select.Key == ConsoleKey.NumPad3)
+                cURR = CURR.EURO;
             //category spending add
-            accounts[Current_Account_ID - 1].SpendOnCategory(Category_ID,money);
+            accounts[Current_Account_ID - 1].SpendOnCategory(Category_ID,money,cURR);
         }
         static void Main(string[] args)
         {
