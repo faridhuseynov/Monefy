@@ -15,23 +15,36 @@ namespace Monefy
         {
             Console.WriteLine("1. Spend" +
                               "\n2. Add money" +
-                              "\n3. Account" +
+                              "\n3. Accounts" +
                               "\n4. Categories" +
                               "\n5. Statistics" +
                               "\n6. Export to CSV" +
                               "\n7. Settings" +
                               "\n8. Exit");
         }
-
+        static public void AccountScreen()
+        {
+            Console.WriteLine("1. Add\n" +
+                              "2. Edit" +
+                              "3. Delete" +
+                              "4. Exit\n");
+        }
         static public void InitialData()
         {
             Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500};
             accounts.Add(a);
             accounts[0].SpendOnCategory(accounts[0].categories_expense,Type.Expense,200,CURR.AZN);
         }
-
+        static public void PrintAllAccounts()
+        {
+            foreach (var item in accounts)
+            {
+                Console.WriteLine(item.ToString());
+                Console.WriteLine("=========================");
+            }
+        }
         //static function to add new account
-        static public void AddAccount()
+        static public void AddAccount(int ID)
         {
             Console.WriteLine("Enter the account name:");
             string name = Console.ReadLine();
@@ -48,10 +61,25 @@ namespace Monefy
                 cURR = CURR.EURO;
             Console.WriteLine("Enter the money to save in hidden balance(optional):");
             int hidden = Int32.Parse(Console.ReadLine());
-            int id = accounts.Count + 1;
+            int id = ID;
             accounts.Add(new Account { Name = name, Money = money, Currency = cURR, HiddenBalance = hidden, Account_ID = id });
         }
-
+        static public void EditAccount(int ID) {
+            RemoveAccount(ID);
+            AddAccount(ID);
+            accounts = accounts.OrderBy(x => x.Account_ID).ToList();
+        }
+        static public void RemoveAccount(int Account_ID)
+        {
+            foreach (var item in accounts)
+            {
+                if (item.Account_ID==Account_ID)
+                {
+                    accounts.Remove(item);
+                    break;
+                }
+            }
+        }
         //static function to add spending
         static public void SpendMoney()
         {
@@ -70,7 +98,7 @@ namespace Monefy
             //if no accounts yet, first add account
             if (accounts.Count == 0)
             {
-                AddAccount();
+                AddAccount(accounts.Count+1);
                 //get account ID to work with
                 Current_Account_ID = 1;
                 accounts[0].Currency = cURR;
@@ -89,7 +117,7 @@ namespace Monefy
             //add new account
             if (Current_Account_ID == accounts.Count + 1)
             {
-                AddAccount();
+                AddAccount(accounts.Count+1);
                 accounts[accounts.Count].Currency = cURR;
             }
             //select category type
@@ -132,7 +160,28 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D3)
                 {
-
+                    //print all existing accounts
+                    PrintAllAccounts();
+                    //after printing new screen appears allowing work with accounts
+                    AccountScreen();
+                    //selection of the next operation with accounts
+                    ConsoleKeyInfo accountSelection = Console.ReadKey();
+                    if (accountSelection.Key == ConsoleKey.D1 || accountSelection.Key == ConsoleKey.NumPad1)
+                        AddAccount(accounts.Count+1);
+                    else if (accountSelection.Key == ConsoleKey.D2 || accountSelection.Key == ConsoleKey.NumPad2)
+                    {
+                        Console.WriteLine("Enter the ID of the account you want to edit: ");
+                        int ID = Int32.Parse(Console.ReadLine());
+                        EditAccount(ID);
+                    }
+                    else if (accountSelection.Key == ConsoleKey.D3 || accountSelection.Key == ConsoleKey.NumPad3)
+                    {
+                        Console.WriteLine("Enter the ID of the account you want to delete: ");
+                        int ID = Int32.Parse(Console.ReadLine());
+                        RemoveAccount(ID);
+                    }
+                        Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
                 }
                 else if (choice.Key == ConsoleKey.NumPad4 || choice.Key == ConsoleKey.D4)
                 {
@@ -152,16 +201,7 @@ namespace Monefy
                 }
                 else
                     Environment.Exit(0);
-            }
-            //foreach (var item in accounts)
-            //{
-            //    Console.WriteLine(item.ToString());
-            //    foreach (var item2 in accounts[0].categories)
-            //    {
-            //        Console.WriteLine(item2.ToString());
-            //    }
-            //}
-            
+            }        
         }
     }
 }

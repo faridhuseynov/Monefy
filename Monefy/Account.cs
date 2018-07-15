@@ -43,8 +43,9 @@ namespace Monefy
         };
         public List<Category> categories_income = new List<Category>()
         {
-            new Category { Name="SALARY",ID=14,type=Type.Income },
-            new Category { Name="OTHER",ID=15,type=Type.Income}
+            new Category { Name="SALARY",ID=1,type=Type.Income },
+            new Category { Name="DEPOSITS",ID=2,type=Type.Income},
+            new Category { Name="SAVINGS",ID=2,type=Type.Income }
         };
 //static dictionary for the currencies
 static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
@@ -65,15 +66,14 @@ static public Dictionary<string, double> Exchange = new Dictionary<string, doubl
             return $"Account: {Name}\nID:{Account_ID}\nBalance: {Money}{Currency.ToString()}"; 
         }
         //add new category
-        public void NewCategoryAdd()
+        public void NewCategoryAdd(List <Category> categories,Type type)
         {
             Category category = new Category();
-            Console.WriteLine("Select category type:\n1.Expense\t2.Income");
-            ConsoleKeyInfo category_select = Console.ReadKey();
-            if (category_select.Key == ConsoleKey.D1 || category_select.Key == ConsoleKey.NumPad1)
-                categories_expense.Add(category);
-            else
-                categories_income.Add(category);
+            Console.WriteLine("Enter the category name:");
+            category.Name = Console.ReadLine();
+            category.type = type;
+            category.ID = categories.Count + 1;
+            categories.Add(category);
         }
         //function OpsAdd
         public void OpsAdd(int CategoryID, double money, CURR currency)
@@ -100,10 +100,10 @@ static public Dictionary<string, double> Exchange = new Dictionary<string, doubl
             {
                 Console.WriteLine(item.ToString());
             }
-            Console.WriteLine($"Select the ID of the category or enter {categories.Count} to add new category:");
+            Console.WriteLine($"Select the ID of the category or enter {categories.Count+1} to add new category:");
             int Category_ID = Int32.Parse(Console.ReadLine());
-            if (Category_ID == categories.Count)
-                NewCategoryAdd();
+            if (Category_ID == categories.Count+1)
+                NewCategoryAdd(categories,category_type);
             foreach (var item in categories)
             {
                 //required category found by CategoryID
