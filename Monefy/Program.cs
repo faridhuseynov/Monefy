@@ -25,16 +25,17 @@ namespace Monefy
         static public void AccountScreen()
         {
             Console.WriteLine("1. Add\n" +
-                              "2. Edit" +
-                              "3. Delete" +
-                              "4. Exit\n");
+                              "2. Edit\n" +
+                              "3. Delete\n" +
+                              "4. Select account\n" +
+                              "5. Exit\n");
         }
-        static public void InitialData()
-        {
-            Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500};
-            accounts.Add(a);
-            accounts[0].SpendOnCategory(accounts[0].categories_expense,Type.Expense,200,CURR.AZN);
-        }
+        // static public void InitialData()
+        //{
+        //    Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500};
+        //    accounts.Add(a);
+        //    accounts[0].SpendOnCategory(accounts[0].categories_expense,Type.Expense,200,CURR.AZN);
+        //}
         static public void PrintAllAccounts()
         {
             foreach (var item in accounts)
@@ -42,6 +43,16 @@ namespace Monefy
                 Console.WriteLine(item.ToString());
                 Console.WriteLine("=========================");
             }
+        }
+        //account list check function
+        static public bool AccountCheck()
+        {
+            if (accounts.Count==0)
+            {
+                Console.WriteLine("No account exist. To proceed further add account first");
+                return false;
+            }
+            return true;
         }
         //static function to add new account
         static public void AddAccount(int ID)
@@ -57,7 +68,7 @@ namespace Monefy
                 cURR = CURR.AZN;
             else if (cur.Key == ConsoleKey.D2 || cur.Key == ConsoleKey.NumPad2)
                 cURR = CURR.USD;
-            else if (cur.Key == ConsoleKey.D2 || cur.Key == ConsoleKey.NumPad2)
+            else if (cur.Key == ConsoleKey.D3 || cur.Key == ConsoleKey.NumPad3)
                 cURR = CURR.EURO;
             Console.WriteLine("Enter the money to save in hidden balance(optional):");
             int hidden = Int32.Parse(Console.ReadLine());
@@ -68,6 +79,10 @@ namespace Monefy
             RemoveAccount(ID);
             AddAccount(ID);
             accounts = accounts.OrderBy(x => x.Account_ID).ToList();
+        }
+        static public void SelectAccount(int ID)
+        {
+            Current_Account_ID = ID;
         }
         static public void RemoveAccount(int Account_ID)
         {
@@ -142,7 +157,7 @@ namespace Monefy
         {
             
             ConsoleKeyInfo choice;
-            InitialData();
+            //InitialData();
             while (true)
             {
                 Console.Clear();
@@ -161,26 +176,45 @@ namespace Monefy
                 else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D3)
                 {
                     //print all existing accounts
+                    Console.Clear();
                     PrintAllAccounts();
                     //after printing new screen appears allowing work with accounts
                     AccountScreen();
                     //selection of the next operation with accounts
-                    ConsoleKeyInfo accountSelection = Console.ReadKey();
-                    if (accountSelection.Key == ConsoleKey.D1 || accountSelection.Key == ConsoleKey.NumPad1)
-                        AddAccount(accounts.Count+1);
+                    ConsoleKeyInfo accountSelection = Console.ReadKey(true);
+                    if (accountSelection.Key == ConsoleKey.NumPad1 || accountSelection.Key == ConsoleKey.D1) {
+                        if (accounts.Count == 0)
+                            AddAccount(1);
+                        else
+                            AddAccount(accounts.Last().Account_ID + 1);
+                    }
                     else if (accountSelection.Key == ConsoleKey.D2 || accountSelection.Key == ConsoleKey.NumPad2)
                     {
-                        Console.WriteLine("Enter the ID of the account you want to edit: ");
-                        int ID = Int32.Parse(Console.ReadLine());
-                        EditAccount(ID);
+                        if (AccountCheck())
+                        {
+                            Console.WriteLine("Enter the ID of the account you want to edit: ");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            EditAccount(ID);
+                        }                     
                     }
                     else if (accountSelection.Key == ConsoleKey.D3 || accountSelection.Key == ConsoleKey.NumPad3)
                     {
-                        Console.WriteLine("Enter the ID of the account you want to delete: ");
-                        int ID = Int32.Parse(Console.ReadLine());
-                        RemoveAccount(ID);
+                        if (AccountCheck()){
+                            Console.WriteLine("Enter the ID of the account you want to delete: ");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            RemoveAccount(ID);
+                        }
                     }
-                        Console.WriteLine("Press any key to continue...");
+                    else if(accountSelection.Key == ConsoleKey.D4 || accountSelection.Key == ConsoleKey.NumPad4)
+                    {
+                        if (AccountCheck())
+                        {
+                            Console.WriteLine("Enter the ID of the account");
+                            int id = Int32.Parse(Console.ReadLine());
+                            SelectAccount(id);
+                        }
+                    }
+                    Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                 }
                 else if (choice.Key == ConsoleKey.NumPad4 || choice.Key == ConsoleKey.D4)
@@ -189,6 +223,13 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
                 {
+                    if (accounts.Count==0)
+                    {
+                        Console.WriteLine("No account found. Add account first");
+                        AddAccount(1);
+                        Current_Account_ID = 1;
+                    }
+                    if (Current_Account_ID == 0) { }
 
                 }
                 else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
