@@ -131,6 +131,11 @@ namespace Monefy
             //category spending add
             accounts[Current_Account_ID - 1].SpendOnCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense,money,cURR);
         }
+        //static function to review all operations
+        static public void ShowOperations()
+        {
+
+        }
         static void Main(string[] args)
         {
             ConsoleKeyInfo choice;

@@ -23,7 +23,14 @@ namespace Monefy
 
         //accounts ID
         public int Account_ID { get; set; }
-
+        //check operations for chosen account
+        public void ShowOps()
+        {
+            foreach (var item in Ops)
+            {
+                Console.WriteLine(item.ToString());
+            }
+        }
         //list of categories
         public List<Category> categories_expense = new List<Category>()
             {
@@ -48,18 +55,9 @@ namespace Monefy
             new Category { Name="SAVINGS",ID=3,type=Type.Income }
         };
         //static dictionary for the currencies
-        static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};
-
-        
-        //constructor for account
-        public Account()
-        {
-            
-        }
-    
+        static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};    
         //list of the Operations
         public List<Operations> Ops=new List<Operations>();
-
         //override ToString
         public override string ToString()
         {
@@ -86,7 +84,6 @@ namespace Monefy
             //operation added to the list of operations
             Ops.Add(new Operations { ID_Account = Account_ID, ID_Category = CategoryID, MoneySpent = money, OpsCurrency = currency,Note=note });
         }
-
         //money being spent 
         public void SpendOnCategory(List<Category> categories,Type category_type, double money,CURR currency)
         {
@@ -107,8 +104,6 @@ namespace Monefy
                     else
                         money=money*Exchange[currency.ToString()]/Exchange["EURO"];
                     }
-                    
-
             }
             //print the categories list for user's choice
             foreach (var item in categories)
@@ -169,7 +164,6 @@ namespace Monefy
             }
             Console.WriteLine("Category with this ID not found");
         }
-
         //Delete category
         public void DeleteCategory(List<Category> categories, int CategoryID)
         {
