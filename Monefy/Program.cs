@@ -128,10 +128,8 @@ namespace Monefy
                     accounts[accounts.Count].Currency = cURR;
                 }
             }
-            //select category type
-                category_list = accounts[Current_Account_ID - 1].categories_expense;
             //category spending add
-            accounts[Current_Account_ID - 1].SpendOnCategory(category_list,Type.Expense,money,cURR);
+            accounts[Current_Account_ID - 1].SpendOnCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense,money,cURR);
         }
         static void Main(string[] args)
         {
