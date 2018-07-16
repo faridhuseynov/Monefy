@@ -54,7 +54,7 @@ namespace Monefy
             Console.WriteLine("Enter the account name:");
             string name = Console.ReadLine();
             Console.WriteLine("Enter the money balance:");
-            double money = Int32.Parse(Console.ReadLine());
+            double money = Double.Parse(Console.ReadLine());
             Console.WriteLine("Select the currency:\n1.AZN\t2.USD\t3.EURO");
             CURR cURR=new CURR();
             ConsoleKeyInfo cur = Console.ReadKey(true);
@@ -92,6 +92,13 @@ namespace Monefy
         //static function to add spending
         static public void SpendMoney()
         {
+            //if no accounts yet, first add account
+            if (!AccountCheck())
+            {
+                AddAccount(1);
+                //get account ID to work with
+                Current_Account_ID = 1;
+            }
             Console.WriteLine("Enter the money spent:");
             double money = Double.Parse(Console.ReadLine());
             //select currency of spent money
@@ -100,17 +107,10 @@ namespace Monefy
             CURR cURR = new CURR();
             if (select.Key == ConsoleKey.D1 || select.Key == ConsoleKey.NumPad1)
                 cURR = CURR.AZN;
-            if (select.Key == ConsoleKey.D2 || select.Key == ConsoleKey.NumPad2)
+            else if (select.Key == ConsoleKey.D2 || select.Key == ConsoleKey.NumPad2)
                 cURR = CURR.USD;
-            if (select.Key == ConsoleKey.D3 || select.Key == ConsoleKey.NumPad3)
+            else if (select.Key == ConsoleKey.D3 || select.Key == ConsoleKey.NumPad3)
                 cURR = CURR.EURO;
-            //if no accounts yet, first add account
-            if (accounts.Count == 0)
-            {
-                AddAccount(1);
-                //get account ID to work with
-                Current_Account_ID = 1;
-            }
             //if accounts already exist work with existing or add new one
             else
             {
@@ -133,6 +133,35 @@ namespace Monefy
         {
             accounts[Current_Account_ID - 1].ShowOps();
         }
+        //static function to add money
+        static public void AddMoney()
+        {
+            //if no accounts yet, first add account
+            if (!AccountCheck())
+            {
+                AddAccount(1);
+                //get account ID to work with
+                Current_Account_ID = 1;
+            }
+            else
+            {
+                Console.WriteLine("Enter the money amount:");
+                double money = Double.Parse(Console.ReadLine());
+                //select currency of spent money
+                Console.WriteLine("Select the currency:\n1.AZN\t2.USD\t3.EURO");
+                ConsoleKeyInfo select = Console.ReadKey(true);
+                CURR cURR = new CURR();
+                if (select.Key == ConsoleKey.D1 || select.Key == ConsoleKey.NumPad1)
+                    cURR = CURR.AZN;
+                else if (select.Key == ConsoleKey.D2 || select.Key == ConsoleKey.NumPad2)
+                    cURR = CURR.USD;
+                else if (select.Key == ConsoleKey.D3 || select.Key == ConsoleKey.NumPad3)
+                    cURR = CURR.EURO;
+                //category spending add
+                accounts[Current_Account_ID - 1].SpendOnCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income, money, cURR);
+            }
+        }
+
         static void Main(string[] args)
         {
             ConsoleKeyInfo choice;
@@ -150,7 +179,9 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad2 || choice.Key == ConsoleKey.D2)
                 {
-
+                    AddMoney();
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
                 }
                 else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D3)
                 {
@@ -162,7 +193,7 @@ namespace Monefy
                     //selection of the next operation with accounts
                     ConsoleKeyInfo accountSelection = Console.ReadKey(true);
                     if (accountSelection.Key == ConsoleKey.NumPad1 || accountSelection.Key == ConsoleKey.D1) {
-                        if (accounts.Count == 0)
+                        if (!AccountCheck())
                             AddAccount(1);
                         else
                             AddAccount(accounts.Last().Account_ID + 1);
@@ -198,7 +229,7 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad4 || choice.Key == ConsoleKey.D4)
                 {
-                    if (accounts.Count == 0)
+                    if (!AccountCheck())
                     {
                         Console.WriteLine("No account found. Add account first");
                         AddAccount(1);
