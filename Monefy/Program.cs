@@ -29,12 +29,6 @@ namespace Monefy
                               "4. Select account\n" +
                               "5. Exit\n");
         }
-        // static public void InitialData()
-        //{
-        //    Account a = new Account { Name = "AZN CASH", Account_ID = 1, Currency = CURR.AZN, Money = 500};
-        //    accounts.Add(a);
-        //    accounts[0].SpendOnCategory(accounts[0].categories_expense,Type.Expense,200,CURR.AZN);
-        //}
         //account list print
         static public void PrintAllAccounts()
         {
@@ -218,7 +212,7 @@ namespace Monefy
                         int id = Int32.Parse(Console.ReadLine());
                         SelectAccount(id);
                     }
-                    accounts[Current_Account_ID-1].PrintCategories();
+                    accounts[Current_Account_ID-1].PrintSpecifinCategory(accounts[Current_Account_ID-1].categories_expense);
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                 }

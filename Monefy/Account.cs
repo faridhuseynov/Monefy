@@ -183,7 +183,13 @@ namespace Monefy
             }
             Console.WriteLine("Category with specified ID not found");
         }
-
+        //Print Specific Category
+        public void PrintSpecifinCategory(List<Category> categories){
+            foreach (var item in categories)
+	        {
+                Console.WriteLine($"{item.ToString()}{Currency.ToString()}");
+	        }
+        }
         //Print Categories
         public void PrintCategories()
         {
