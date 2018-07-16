@@ -171,7 +171,24 @@ namespace Monefy
                 accounts[Current_Account_ID - 1].SpendOnCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income, money, cURR);
             }
         }
-
+        //add category function
+        static public void AddCategory(List <Category> categories, Type type)
+        {
+            Category category = new Category();
+            Console.WriteLine("Enter category name:");
+            category.Name = Console.ReadLine();
+            category.type = type;
+            if (categories.Count == 0)
+            {
+                categories.Add(category);
+                categories[0].ID = 1;
+            }
+            else
+            {
+                category.ID = categories.Last().ID + 1;
+                categories.Add(category);
+            }
+        }
         static void Main(string[] args)
         {
             ConsoleKeyInfo choice;
@@ -254,9 +271,11 @@ namespace Monefy
                         SelectAccount(id);
                     }
                     accounts[Current_Account_ID-1].PrintCategories();
-                    
-                        Console.WriteLine("Press any key to continue...");
-                        Console.ReadKey();
+                    Console.WriteLine("=================================================");
+                    CategoryScreen();
+                    ConsoleKeyInfo category_selection = Console.ReadKey(true);
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
                 }
                 else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
                 {
