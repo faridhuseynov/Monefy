@@ -54,7 +54,7 @@ namespace Monefy
             Console.WriteLine("Enter the account name:");
             string name = Console.ReadLine();
             Console.WriteLine("Enter the money balance:");
-            int money = Int32.Parse(Console.ReadLine());
+            double money = Int32.Parse(Console.ReadLine());
             Console.WriteLine("Select the currency:\n1.AZN\t2.USD\t3.EURO");
             CURR cURR=new CURR();
             ConsoleKeyInfo cur = Console.ReadKey(true);
@@ -65,7 +65,7 @@ namespace Monefy
             else if (cur.Key == ConsoleKey.D3 || cur.Key == ConsoleKey.NumPad3)
                 cURR = CURR.EURO;
             Console.WriteLine("Enter the money to save in hidden balance(optional):");
-            int hidden = Int32.Parse(Console.ReadLine());
+            double hidden = Double.Parse(Console.ReadLine());
             int id = ID;
             accounts.Add(new Account { Name = name, Money = money, Currency = cURR, HiddenBalance = hidden, Account_ID = id });
         }
@@ -123,10 +123,7 @@ namespace Monefy
                 Current_Account_ID = Int32.Parse(Console.ReadLine());
                 //add new account
                 if (Current_Account_ID == accounts.Last().Account_ID + 1)
-                {
                     AddAccount(Current_Account_ID);
-                    accounts[accounts.Count].Currency = cURR;
-                }
             }
             //category spending add
             accounts[Current_Account_ID - 1].SpendOnCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense,money,cURR);
@@ -134,7 +131,7 @@ namespace Monefy
         //static function to review all operations
         static public void ShowOperations()
         {
-
+            accounts[Current_Account_ID - 1].ShowOps();
         }
         static void Main(string[] args)
         {
@@ -215,7 +212,7 @@ namespace Monefy
                         int id = Int32.Parse(Console.ReadLine());
                         SelectAccount(id);
                     }
-                    accounts[Current_Account_ID-1].PrintSpecifinCategory(accounts[Current_Account_ID-1].categories_expense);
+                    accounts[Current_Account_ID-1].PrintSpecifingCategory(accounts[Current_Account_ID-1].categories_expense);
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                 }
@@ -226,7 +223,9 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
                 {
-
+                    accounts[Current_Account_ID - 1].ShowOps();
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
                 }
                 else if (choice.Key == ConsoleKey.NumPad7 || choice.Key == ConsoleKey.D7)
                 {

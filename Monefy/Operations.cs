@@ -25,5 +25,14 @@ namespace Monefy
 
         //currency operation was performed
         public CURR OpsCurrency { get; set; }
+
+        //override ToString() function
+        public override string ToString()
+        {
+            return $"Category ID: {ID_Category}\nMoney spent: { MoneySpent}\nOps Currency: { OpsCurrency.ToString()}\n" +
+                $"Note: { Note}\nDate: { date.ToString()}";
+        }
     }
 }
+//ID_Category\t\tMoney Spent\t\tDate\tNote\tOps Currency\n" +
+               

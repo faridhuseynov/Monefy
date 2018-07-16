@@ -23,14 +23,6 @@ namespace Monefy
 
         //accounts ID
         public int Account_ID { get; set; }
-        //check operations for chosen account
-        public void ShowOps()
-        {
-            foreach (var item in Ops)
-            {
-                Console.WriteLine(item.ToString());
-            }
-        }
         //list of categories
         public List<Category> categories_expense = new List<Category>()
             {
@@ -54,14 +46,24 @@ namespace Monefy
             new Category { Name="DEPOSITS",ID=2,type=Type.Income},
             new Category { Name="SAVINGS",ID=3,type=Type.Income }
         };
-        //static dictionary for the currencies
-        static public Dictionary<string, double> Exchange = new Dictionary<string, double>{ {"AZN",1 },{"USD",1.7 },{"EURO",2.088}};    
         //list of the Operations
-        public List<Operations> Ops=new List<Operations>();
+        public List<Operations> Ops = new List<Operations>();
         //override ToString
         public override string ToString()
         {
-            return $"Account: {Name}\nID:{Account_ID}\nBalance: {Money}{Currency.ToString()}"; 
+            return $"Account: {Name}\nID:{Account_ID}\nBalance: {Money}{Currency.ToString()}";
+        }
+        //static dictionary for the currencies
+        static public Dictionary<string, double> Exchange = new Dictionary<string, double> { { "AZN", 1 }, { "USD", 1.7 }, { "EURO", 2.088 } };
+        
+        //check operations for chosen account
+        public void ShowOps()
+        {
+            foreach (var item in Ops)
+            {
+                Console.WriteLine(item.ToString());
+                Console.WriteLine("============================");
+            }
         }
         //add new category
         public void NewCategoryAdd(List <Category> categories,Type type)
@@ -82,11 +84,13 @@ namespace Monefy
             Console.WriteLine("Enter the note for the operation");
             string note = Console.ReadLine();
             //operation added to the list of operations
-            Ops.Add(new Operations { ID_Account = Account_ID, ID_Category = CategoryID, MoneySpent = money, OpsCurrency = currency,Note=note });
+            Ops.Add(new Operations { ID_Account = Account_ID, ID_Category = CategoryID, MoneySpent = money, OpsCurrency = currency,Note=note,date=opsdate });
         }
         //money being spent 
         public void SpendOnCategory(List<Category> categories,Type category_type, double money,CURR currency)
         {
+            //save original amount of money in original account to send to Operations list
+            double original_money = money;
             //check whether spent currency is the same with accounts currency
             if (Currency!=currency)
             {
@@ -128,7 +132,7 @@ namespace Monefy
             //money amount added to account's balance if income
             else
                 Money += money;
-            OpsAdd(Category_ID, money, currency);
+            OpsAdd(Category_ID, original_money, currency);
         }
         //Edit category
         public void EditCategory(List<Category> categories, int CategoryID)
@@ -178,7 +182,7 @@ namespace Monefy
             Console.WriteLine("Category with specified ID not found");
         }
         //Print Specific Category
-        public void PrintSpecifinCategory(List<Category> categories){
+        public void PrintSpecifingCategory(List<Category> categories){
             foreach (var item in categories)
 	        {
                 Console.WriteLine($"{item.ToString()}{Currency.ToString()}");
