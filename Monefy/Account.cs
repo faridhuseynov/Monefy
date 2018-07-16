@@ -195,14 +195,14 @@ namespace Monefy
             Console.WriteLine("Expense:\n");
             foreach (var item in categories_expense)
             {
-                Console.WriteLine(item.ToString());
+                Console.WriteLine($"{item.ToString()}{ Currency.ToString()}");
             }
             Console.WriteLine("===============================");
             //Print all Income type categories
             Console.WriteLine("Income:\n");
             foreach (var item in categories_income)
             {
-                    Console.WriteLine(item.ToString());
+                    Console.WriteLine($"{item.ToString()}{ Currency.ToString()}");
             }
         }
     }

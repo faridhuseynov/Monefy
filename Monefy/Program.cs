@@ -21,6 +21,7 @@ namespace Monefy
                               "\n7. Settings" +
                               "\n8. Exit");
         }
+        //account screen
         static public void AccountScreen()
         {
             Console.WriteLine("1. Add\n" +
@@ -28,6 +29,14 @@ namespace Monefy
                               "3. Delete\n" +
                               "4. Select account\n" +
                               "5. Exit\n");
+        }
+        //categories screen
+        static public void CategoryScreen()
+        {
+            Console.WriteLine("1. Add\n" +
+                              "2. Edit\n" +
+                              "3. Delete\n" +
+                              "4. Exit\n");
         }
         //account list print
         static public void PrintAllAccounts()
@@ -142,6 +151,7 @@ namespace Monefy
                 AddAccount(1);
                 //get account ID to work with
                 Current_Account_ID = 1;
+                accounts[0].categories_income[0].MoneySpent = accounts[0].Money;
             }
             else
             {
@@ -231,9 +241,9 @@ namespace Monefy
                 {
                     if (!AccountCheck())
                     {
-                        Console.WriteLine("No account found. Add account first");
                         AddAccount(1);
                         Current_Account_ID = 1;
+                        accounts[0].categories_income[0].MoneySpent = accounts[0].Money;
                     }
                     else if (accounts.Count != 0 && Current_Account_ID == 0)
                     {
@@ -243,7 +253,8 @@ namespace Monefy
                         int id = Int32.Parse(Console.ReadLine());
                         SelectAccount(id);
                     }
-                    accounts[Current_Account_ID-1].PrintSpecifingCategory(accounts[Current_Account_ID-1].categories_expense);
+                    accounts[Current_Account_ID-1].PrintCategories();
+                    
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
                 }
