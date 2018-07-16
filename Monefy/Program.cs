@@ -176,7 +176,7 @@ namespace Monefy
         {
             Category category = new Category();
             Console.WriteLine("Enter category name:");
-            category.Name = Console.ReadLine();
+            category.Name = Console.ReadLine().ToUpper();
             category.type = type;
             if (categories.Count == 0)
             {
@@ -274,6 +274,46 @@ namespace Monefy
                     Console.WriteLine("=================================================");
                     CategoryScreen();
                     ConsoleKeyInfo category_selection = Console.ReadKey(true);
+                    if (category_selection.Key != ConsoleKey.NumPad4 && category_selection.Key != ConsoleKey.D4)
+                    {
+                        Console.WriteLine("Select category type:\n1.Expense\t2.Income");
+                        ConsoleKeyInfo cat_type = Console.ReadKey(true);
+                        if (category_selection.Key == ConsoleKey.NumPad1 || category_selection.Key == ConsoleKey.D1)
+                        {
+                            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
+                                AddCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense);
+                            else
+                                AddCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income);
+                        }
+                        else if (category_selection.Key == ConsoleKey.NumPad2 || category_selection.Key == ConsoleKey.D2)
+                        {
+                            Console.WriteLine("Select category ID to edit:");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
+                            {
+                                accounts[Current_Account_ID - 1].EditCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense, ID);
+                                accounts[Current_Account_ID - 1].categories_expense = accounts[Current_Account_ID - 1].categories_expense.OrderBy(p => p.ID).ToList();
+                            }
+                            else
+                            {
+                                accounts[Current_Account_ID - 1].EditCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income, ID);
+                                accounts[Current_Account_ID - 1].categories_income = accounts[Current_Account_ID - 1].categories_income.OrderBy(p => p.ID).ToList();
+                            }
+                        }
+                        else if (category_selection.Key == ConsoleKey.NumPad3 || category_selection.Key == ConsoleKey.D3)
+                        {
+                            Console.WriteLine("Select category ID to delete:");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
+                                accounts[Current_Account_ID - 1].DeleteCategory(accounts[Current_Account_ID - 1].categories_expense, ID);
+                            else
+                                accounts[Current_Account_ID - 1].DeleteCategory(accounts[Current_Account_ID - 1].categories_income, ID);
+
+                        }
+
+
+                    }
+
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                 }

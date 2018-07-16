@@ -135,7 +135,7 @@ namespace Monefy
             OpsAdd(Category_ID, original_money, currency);
         }
         //Edit category
-        public void EditCategory(List<Category> categories, int CategoryID)
+        public void EditCategory(List<Category> categories,Type type, int CategoryID)
         {
             foreach (var item in categories)
             {
@@ -145,24 +145,17 @@ namespace Monefy
                     //set the category name
                     Console.WriteLine("Enter category name:");
                     string cat_name = Console.ReadLine();
+                    //name to be uppercase and with space in beginning
+                    temp.Name = " " + cat_name.ToUpper();
                     //set the category type
-                    Console.WriteLine("Select category type\n1.Expense\t2.Income");
-                    ConsoleKeyInfo choice = Console.ReadKey(true);
-                    if (choice.Key == ConsoleKey.NumPad1 || choice.Key == ConsoleKey.D1)
-                    {
-                        temp.type = Type.Expense;
-                    }
-                    else
-                    {
-                        temp.type = Type.Income;
-                    }
+                    temp.type = type;
                     //set category ID
                     temp.ID = CategoryID;
                     //set category money spent
                     temp.MoneySpent = item.MoneySpent;
                     categories.Remove(item);
                     categories.Add(temp);
-                    Console.WriteLine("Category successfully edited");
+                    Console.WriteLine($"Category {item.Name} successfully edited");
                     return;
                 }
             }
@@ -176,6 +169,7 @@ namespace Monefy
                 if (item.ID==CategoryID)
                 {
                     categories.Remove(item);
+                    Console.WriteLine($"Category {item.Name} has been successfully deleted");
                     return;
                 }
             }
