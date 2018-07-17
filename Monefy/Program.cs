@@ -193,6 +193,10 @@ namespace Monefy
         {
 
         }
+        static public void StoraData()
+        {
+
+        }
         static void Main(string[] args)
         {
             ConsoleKeyInfo choice;

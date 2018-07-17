@@ -34,5 +34,4 @@ namespace Monefy
         }
     }
 }
-//ID_Category\t\tMoney Spent\t\tDate\tNote\tOps Currency\n" +
                

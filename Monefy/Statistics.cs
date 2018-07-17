@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace Monefy
 {
-    class Statistics
+    static class Extensions
     {
-        static public void ShowStatistics(Predicate <int> predicate)
+        static public void Statistics (this List<Operations> operations, DateTime date)
         {
-
+            double spent_money = 0;
+            foreach (var item in operations)
+            {
+                if (item.date.Date==date.Date)
+                {
+                    spent_money += item.MoneySpent;
+                }
+            }
         } 
     }
 }
