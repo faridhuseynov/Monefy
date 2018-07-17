@@ -189,9 +189,27 @@ namespace Monefy
                 categories.Add(category);
             }
         }
-        static public void Statistics()
+        //statistics function for operations
+        static public void Statistics(DateTime date)
         {
-
+            //result is the list of the operations performed on the specified date
+            var result=accounts[Current_Account_ID - 1].Ops.Where(x => x.date == date && x.MoneySpent!=0).ToList();
+            //double sum is the total amount of money spent on the specified date
+            double sum = result.Sum(x=>x.MoneySpent);
+            if (sum != 0)
+            {
+                //dictionary category_spend is the dictionary that will be used to get the money spent per category
+                //key is the Category_ID value and value is the money spent
+                Dictionary<int, double> category_spend = new Dictionary<int, double>();
+                foreach (var item in result)
+                    category_spend.Add(item.ID_Category, 0);
+                for (int i = 0; i < result.Count; i++)
+                    category_spend[result[i].ID_Category] += result[i].MoneySpent;
+                foreach (var item in result)
+                    Console.WriteLine($"{accounts[Current_Account_ID-1].categories_expense[item.ID_Category].Name}:{category_spend[item.ID_Category]/sum}%");
+            }
+            else
+                Console.WriteLine("No spending on chosen time interval");
         }
         static public void StoraData()
         {

@@ -8,7 +8,7 @@ namespace Monefy
 {
     static class Extensions
     {
-        static public void Statistics (this List<Operations> operations, DateTime date)
+        static public double Statistics (this List<Operations> operations, DateTime date)
         {
             double spent_money = 0;
             foreach (var item in operations)
@@ -18,6 +18,7 @@ namespace Monefy
                     spent_money += item.MoneySpent;
                 }
             }
+            return spent_money;
         } 
     }
 }
