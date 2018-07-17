@@ -89,8 +89,6 @@ namespace Monefy
         //money being spent 
         public void SpendOnCategory(List<Category> categories,Type category_type, double money,CURR currency)
         {
-            //save original amount of money in original account to send to Operations list
-            double original_money = money;
             //check whether spent currency is the same with accounts currency
             if (Currency!=currency)
             {
@@ -132,7 +130,7 @@ namespace Monefy
             //money amount added to account's balance if income
             else
                 Money += money;
-            OpsAdd(Category_ID, original_money, currency);
+            OpsAdd(Category_ID, money, Currency);
         }
         //Edit category
         public void EditCategory(List<Category> categories,Type type, int CategoryID)
