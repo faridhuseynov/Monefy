@@ -189,6 +189,10 @@ namespace Monefy
                 categories.Add(category);
             }
         }
+        static public void Statistics()
+        {
+
+        }
         static void Main(string[] args)
         {
             ConsoleKeyInfo choice;
