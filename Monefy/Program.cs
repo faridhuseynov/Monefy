@@ -192,14 +192,11 @@ namespace Monefy
         //statistics function for operations. 2 dates are set as input, mainly for week or 2 different day intervals and
         //set with default values in order to be able to work even with 1 argument for statistics per year, month, daily
         //int type defines whether it will be date interval or daily, monthly, annual
-        static public void Statistics(int type,DateTime date1=new DateTime(), DateTime date2= new DateTime())
+        static public void Statistics(DateTime date1, DateTime date2)
         {
             List<Operations> result=new List<Operations>();
-            if (type == 1)
-            {
-                //result is the list of the operations performed on the specified date
-                result = accounts[Current_Account_ID - 1].Ops.Where(x => x.date.Day >= date1.Day && x.date.Day <= date2.Day && x.MoneySpent != 0).ToList();
-            }
+            //result is the list of the operations performed on the specified date
+            result = accounts[Current_Account_ID - 1].Ops.Where(x => x.date >= date1 && x.date <= date2 && x.MoneySpent != 0).ToList();
             //double sum is the total amount of money spent on the specified date
             double sum = result.Sum(x=>x.MoneySpent);
             if (sum != 0)
@@ -217,7 +214,7 @@ namespace Monefy
             else
                 Console.WriteLine("No spending on chosen time interval");
         }
-        static public void StoraData()
+        static public void StoreData()
         {
 
         }
@@ -351,7 +348,8 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
                 {
-                    Console.WriteLine("For date interval press 1 for annual, monthly or daily, press 2");
+                    //user selects date type for search
+                    Console.WriteLine("For date interval - press 1; for annual, monthly or daily - press 2");
                     ConsoleKeyInfo type_select = Console.ReadKey(true);
                     if (type_select.Key == ConsoleKey.D1 || type_select.Key == ConsoleKey.NumPad1)
                     {
@@ -360,32 +358,37 @@ namespace Monefy
                         if (type_select.Key == ConsoleKey.NumPad1 || type_select.Key == ConsoleKey.D1)
                         {
                             //date for date 1
-                            Console.WriteLine("Enter year:");
+                            Console.WriteLine("Enter 'from' reference year:");
                             int year = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter month:");
+                            Console.WriteLine("Enter 'from' reference month:");
                             int month = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter day:");
+                            Console.WriteLine("Enter 'from' reference day:");
                             int day = Int32.Parse(Console.ReadLine());
                             DateTime date1 = new DateTime(year, month, day);
                             //date for date2
-                            Console.WriteLine("Enter year:");
+                            Console.WriteLine("Enter 'to' reference year:");
                              year = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter month:");
+                            Console.WriteLine("Enter 'to' reference month:");
                              month = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("Enter day:");
+                            Console.WriteLine("Enter 'to' reference day:");
                              day = Int32.Parse(Console.ReadLine());
                             DateTime date2 = new DateTime(year, month, day);
-                            Statistics(1, date1,date2);
+                            Statistics(date1,date2);
                         }
                         else if (type_select.Key == ConsoleKey.NumPad2 || type_select.Key == ConsoleKey.D2)
                         {
                             //date for date reference
-                            DateTime date1 =  new DateTime();
-                            date1 = DateTime.Now;
+                            Console.WriteLine("Enter 'from' reference year:");
+                            int year = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'from' reference month:");
+                            int month = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'from' reference day:");
+                            int day = Int32.Parse(Console.ReadLine());
+                            DateTime date1 =  new DateTime(year,month,day);
                             DateTime date2 = new DateTime();
                             date2 = date1;
                             date2=date2.AddDays(7);
-                            Statistics(2, date1, date2);
+                            Statistics(date1, date2);
                         }
                     }
                     else if (type_select.Key==ConsoleKey.D2||type_select.Key==ConsoleKey.NumPad2)
@@ -400,8 +403,9 @@ namespace Monefy
                             int month = Int32.Parse(Console.ReadLine());
                             Console.WriteLine("Enter day:");
                             int day = Int32.Parse(Console.ReadLine());
-                            DateTime date = new DateTime(year, month, day);
-                            Statistics(3, date);
+                            DateTime date1 = new DateTime(year, month, day);
+                            DateTime date2 = new DateTime(year, month, day);
+                            Statistics(date1,date2);
                         }
                         else if (type_select.Key == ConsoleKey.NumPad2 || type_select.Key == ConsoleKey.D2)
                         {
@@ -409,15 +413,17 @@ namespace Monefy
                             int year = Int32.Parse(Console.ReadLine());
                             Console.WriteLine("Enter month:");
                             int month = Int32.Parse(Console.ReadLine());
-                            DateTime date = new DateTime(year, month, 1);
-                            Statistics(4, date);
+                            DateTime date1 = new DateTime(year, month, 1);
+                            DateTime date2 = new DateTime(year, month, 31);
+                            Statistics(date1,date2);
                         }
                         else if (type_select.Key == ConsoleKey.NumPad3 || type_select.Key == ConsoleKey.D3)
                         {
                             Console.WriteLine("Enter year:");
                             int year = Int32.Parse(Console.ReadLine());
-                            DateTime date = new DateTime(year, 1, 1);
-                            Statistics(5, date);
+                            DateTime date1 = new DateTime(year, 1, 1);
+                            DateTime date2 = new DateTime(year, 12, 31);
+                            Statistics(date1,date2);
                         }
                     }
                     Console.WriteLine("Press any key to continue...");

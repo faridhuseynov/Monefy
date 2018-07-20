@@ -78,8 +78,27 @@ namespace Monefy
         //function OpsAdd
         public void OpsAdd(int CategoryID, double money, CURR currency)
         {
-            //set the time to current time by default, will be changed later to have option of changing the date
-            DateTime opsdate = DateTime.Now;
+            //first check whether ops date should be changed
+            Console.WriteLine("Do you want to specify date of the operation? Press 1 to set the date or 2 to use today's date by default");
+            ConsoleKeyInfo ops_date = Console.ReadKey(true);
+            //simple if function
+            DateTime opsdate;
+            if (ops_date.Key == ConsoleKey.NumPad1 || ops_date.Key == ConsoleKey.D1)
+            {
+                //enter ops date
+                Console.WriteLine("Enter day of operation:");
+                int day=Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Enter month of operation:");
+                int month = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Enter year of operation:");
+                int year = Int32.Parse(Console.ReadLine());
+                opsdate = new DateTime(year, month, day);
+            }
+            else
+            {
+                //set the time to current time by default
+                opsdate = DateTime.Now;
+            }
             //note of operation added
             Console.WriteLine("Enter the note for the operation");
             string note = Console.ReadLine();
