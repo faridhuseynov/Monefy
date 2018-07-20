@@ -19,7 +19,8 @@ namespace Monefy
                               "\n5. Statistics" +
                               "\n6. Export to CSV" +
                               "\n7. Settings" +
-                              "\n8. Exit");
+                              "\n8. Save/Load data" +
+                              "\n9. Exit");
         }
         //account screen
         static public void AccountScreen()
@@ -110,6 +111,12 @@ namespace Monefy
             }
             Console.WriteLine("Enter the money spent:");
             double money = Double.Parse(Console.ReadLine());
+            //check the amoun of money, if 0 or negative then stop
+            if (money<=0)
+            {
+                Console.WriteLine($"Money can not be {money}, repeat again");
+                return;
+            }
             //select currency of spent money
             Console.WriteLine("Select the currency of spent money:\n1.AZN\t2.USD\t3.EURO");
             ConsoleKeyInfo select = Console.ReadKey(true);
@@ -404,7 +411,7 @@ namespace Monefy
                             Console.WriteLine("Enter day:");
                             int day = Int32.Parse(Console.ReadLine());
                             DateTime date1 = new DateTime(year, month, day);
-                            DateTime date2 = new DateTime(year, month, day);
+                            DateTime date2 = new DateTime(year, month, day,23,59,59);
                             Statistics(date1,date2);
                         }
                         else if (type_select.Key == ConsoleKey.NumPad2 || type_select.Key == ConsoleKey.D2)
@@ -439,6 +446,20 @@ namespace Monefy
                 {
 
                 }
+                else if (choice.Key == ConsoleKey.NumPad8 || choice.Key == ConsoleKey.D8)
+                {
+                    Console.WriteLine("Press S to save or L to load");
+                    ConsoleKeyInfo data_selection = Console.ReadKey(true);
+                    if (data_selection.Key==ConsoleKey.S)
+                    {
+
+                    }
+                    else if (data_selection.Key==ConsoleKey.L)
+                    {
+
+                    }
+                }
+
                 else
                     Environment.Exit(0);
             }        
