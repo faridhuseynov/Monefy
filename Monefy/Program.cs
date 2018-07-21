@@ -225,9 +225,42 @@ namespace Monefy
             else
                 Console.WriteLine("No spending on chosen time interval");
         }
+        //function to load and save the data
         static public void StoreData()
         {
 
+        }
+        //function to export to CSV
+        static void ExportToCSV()
+        {
+            //create csv stringbuilder
+            var csv = new StringBuilder();
+            //write the column names first
+            csv.AppendLine("Account ID; Category ID; Amount; Currency; Note");
+            //first loop is for accounts that have performed the operations
+            for (int i = 0; i < accounts.Count; i++)
+            {
+                //second loop is for operations that were performed
+                for (int j = 0; j < accounts[i].Ops.Count; j++)
+                {
+                    //get account ID
+                    var first = accounts[i].Ops[j].ID_Account.ToString();
+                    //get category ID
+                    var second = accounts[i].Ops[j].ID_Category.ToString();
+                    //get money amount
+                    var third = accounts[i].Ops[j].MoneySpent.ToString();
+                    //get currency of the amount
+                    var fourth = accounts[i].Ops[j].OpsCurrency.ToString();
+                    //get the note of the operation
+                    var fifth = accounts[i].Ops[j].Note.ToString();
+                    //all values combined in 1 line string
+                    var newLine = string.Format($"{first}; {second}; {third}; {fourth}; {fifth}");
+                    //append line newLine into the csv stringbuilder
+                    csv.AppendLine(newLine);
+                }
+            }
+            //save all csv text in data.csv file
+            File.AppendAllText("data.csv", csv.ToString());
         }
         static void Main(string[] args)
         {
@@ -442,21 +475,7 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
                 {
-                    var csv = new StringBuilder();
-                    for (int i = 0; i < accounts.Count; i++)
-                    {
-                        for (int j = 0; j < accounts[i].Ops.Count; j++)
-                        {
-                            var first = accounts[i].Ops[j].ID_Account.ToString();
-                            var second = accounts[i].Ops[j].ID_Category.ToString();
-                            var third = accounts[i].Ops[j].MoneySpent.ToString();
-                            var fourth = accounts[i].Ops[j].OpsCurrency.ToString();
-                            var fifth = accounts[i].Ops[j].Note.ToString();
-                            var newLine = string.Format(first, second, third, fourth, fifth);
-                            csv.AppendLine(newLine);
-                        }
-                    }
-                    File.AppendAllText("data.txt", csv.ToString());
+                    
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                 }
