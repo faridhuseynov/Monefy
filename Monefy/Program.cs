@@ -228,7 +228,35 @@ namespace Monefy
         //function to load and save the data
         static public void StoreData()
         {
+            Console.WriteLine("Press S to save or L to load");
+            ConsoleKeyInfo data_selection = Console.ReadKey(true);
+            BinaryFormatter formatter = new BinaryFormatter();
+            if (data_selection.Key == ConsoleKey.S)
+            {
+                Console.WriteLine("Enter the file name");
+                string data = Console.ReadLine();
+                using (FileStream fs = new FileStream($"{data}.dat", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, accounts);
+                    Console.WriteLine("File was successfully saved");
+                }
+            }
+            else if (data_selection.Key == ConsoleKey.L)
+            {
+                if (accounts.Count != 0)
+                    Console.WriteLine("The data already loaded");
+                else
+                {
 
+                    Console.WriteLine("Enter the file name");
+                    string data = Console.ReadLine();
+                    using (FileStream fs = new FileStream($"{data}.dat", FileMode.OpenOrCreate))
+                    {
+                        accounts = (List<Account>)formatter.Deserialize(fs);
+                        Console.WriteLine("File was successfully loaded");
+                    }
+                }
+            }
         }
         //function to export to CSV
         static void ExportToCSV()
@@ -236,7 +264,7 @@ namespace Monefy
             //create csv stringbuilder
             var csv = new StringBuilder();
             //write the column names first
-            csv.AppendLine("Account ID; Category ID; Amount; Currency; Note");
+            csv.AppendLine("Account ID,Category ID,Amount,Currency,Date,Note");
             //first loop is for accounts that have performed the operations
             for (int i = 0; i < accounts.Count; i++)
             {
@@ -251,16 +279,20 @@ namespace Monefy
                     var third = accounts[i].Ops[j].MoneySpent.ToString();
                     //get currency of the amount
                     var fourth = accounts[i].Ops[j].OpsCurrency.ToString();
+                    //get date of the operation
+                    var fifth = accounts[i].Ops[j].date.ToString();
                     //get the note of the operation
-                    var fifth = accounts[i].Ops[j].Note.ToString();
+                    var sixth = accounts[i].Ops[j].Note.ToString();
                     //all values combined in 1 line string
-                    var newLine = string.Format($"{first}; {second}; {third}; {fourth}; {fifth}");
+                    var newLine = string.Format($"{first},{second},{third},{fourth},{fifth},{sixth}");
                     //append line newLine into the csv stringbuilder
                     csv.AppendLine(newLine);
                 }
             }
             //save all csv text in data.csv file
-            File.AppendAllText("data.csv", csv.ToString());
+            Console.WriteLine("Enter csv file name:");
+            string data = Console.ReadLine();
+            File.AppendAllText($"{data}.csv", csv.ToString());
         }
         static void Main(string[] args)
         {
@@ -475,7 +507,7 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
                 {
-                    
+                    ExportToCSV();
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                 }
@@ -485,35 +517,7 @@ namespace Monefy
                 }
                 else if (choice.Key == ConsoleKey.NumPad8 || choice.Key == ConsoleKey.D8)
                 {
-                    Console.WriteLine("Press S to save or L to load");
-                    ConsoleKeyInfo data_selection = Console.ReadKey(true);
-                        BinaryFormatter formatter = new BinaryFormatter();
-                    if (data_selection.Key==ConsoleKey.S)
-                    {
-                        Console.WriteLine("Enter the file name");
-                        string data = Console.ReadLine();
-                        using (FileStream fs=new FileStream($"{data}.dat",FileMode.OpenOrCreate))
-                        {
-                            formatter.Serialize(fs, accounts);
-                            Console.WriteLine("File was successfully saved");
-                        }
-                    }
-                    else if (data_selection.Key==ConsoleKey.L)
-                    {
-                        if (accounts.Count != 0)
-                            Console.WriteLine("The data already loaded");
-                        else
-                        {
-
-                            Console.WriteLine("Enter the file name");
-                            string data = Console.ReadLine();
-                            using (FileStream fs = new FileStream($"{data}.dat", FileMode.OpenOrCreate))
-                            {
-                                accounts = (List<Account>)formatter.Deserialize(fs);
-                                Console.WriteLine("File was successfully loaded");
-                            }
-                        }
-                    }
+                    StoreData();
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                 }
