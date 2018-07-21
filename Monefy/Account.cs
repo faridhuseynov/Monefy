@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Monefy
 {
     enum CURR { AZN, USD, EURO };
+    [Serializable]
     class Account
     {
         //account name

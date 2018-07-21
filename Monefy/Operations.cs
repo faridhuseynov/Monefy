@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Monefy
 {
+    [Serializable]
     class Operations
     {
         //account ID 

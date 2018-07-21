@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Monefy
 {
     enum Type { Expense, Income}
+    [Serializable]
     class Category
     {
         //category name
