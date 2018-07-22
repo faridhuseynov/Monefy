@@ -16,25 +16,6 @@ namespace Monefy
         static List<Account> accounts = new List<Account>();
         static public void StartScreen()
         {
-            for (int i = 0; i < 39; i++)
-            {
-                Console.SetCursorPosition(30, i+10);
-                if (i==0||i==38)
-                {
-                    for (int j = 0; j < 39; j++)
-                    {
-                        Console.Write("=");
-                    }
-                }
-                else
-                {
-                    Console.Write("|");
-                    Console.SetCursorPosition(68, i+10);
-                    Console.Write("|");
-                }
-            }
-            Console.ReadKey();
-            Console.SetCursorPosition(30, 10);
             Console.WriteLine("1. Spend" +
                               "\n2. Add money" +
                               "\n3. Accounts" +
@@ -44,7 +25,6 @@ namespace Monefy
                               "\n7. Settings" +
                               "\n8. Save/Load data" +
                               "\n9. Exit");
-            Console.ReadKey();
         }
         //account screen
         static public void AccountScreen()
@@ -320,230 +300,229 @@ namespace Monefy
             //InitialData();
             while (true)
             {
-                Console.SetWindowSize(100, 100);
                 Console.Clear();
                 StartScreen();
-                //choice = Console.ReadKey(true);
-                //if (choice.Key == ConsoleKey.NumPad1 || choice.Key == ConsoleKey.D1)
-                //{
-                //    SpendMoney();
-                //    Console.WriteLine("Press any key to continue...");
-                //    Console.ReadKey();
-                //}
-                //else if (choice.Key == ConsoleKey.NumPad2 || choice.Key == ConsoleKey.D2)
-                //{
-                //    AddMoney();
-                //    Console.WriteLine("Press any key to continue...");
-                //    Console.ReadKey();
-                //}
-                //else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D3)
-                //{
-                //    //print all existing accounts
-                //    Console.Clear();
-                //    PrintAllAccounts();
-                //    //after printing new screen appears allowing work with accounts
-                //    AccountScreen();
-                //    //selection of the next operation with accounts
-                //    ConsoleKeyInfo accountSelection = Console.ReadKey(true);
-                //    if (accountSelection.Key == ConsoleKey.NumPad1 || accountSelection.Key == ConsoleKey.D1) {
-                //        if (!AccountCheck())
-                //            AddAccount(1);
-                //        else
-                //            AddAccount(accounts.Last().Account_ID + 1);
-                //    }
-                //    else if (accountSelection.Key == ConsoleKey.D2 || accountSelection.Key == ConsoleKey.NumPad2)
-                //    {
-                //        if (AccountCheck())
-                //        {
-                //            Console.WriteLine("Enter the ID of the account you want to edit: ");
-                //            int ID = Int32.Parse(Console.ReadLine());
-                //            EditAccount(ID);
-                //        }                     
-                //    }
-                //    else if (accountSelection.Key == ConsoleKey.D3 || accountSelection.Key == ConsoleKey.NumPad3)
-                //    {
-                //        if (AccountCheck()){
-                //            Console.WriteLine("Enter the ID of the account you want to delete: ");
-                //            int ID = Int32.Parse(Console.ReadLine());
-                //            RemoveAccount(ID);
-                //        }
-                //    }
-                //    else if(accountSelection.Key == ConsoleKey.D4 || accountSelection.Key == ConsoleKey.NumPad4)
-                //    {
-                //        if (AccountCheck())
-                //        {
-                //            Console.WriteLine("Enter the ID of the account");
-                //            int id = Int32.Parse(Console.ReadLine());
-                //            SelectAccount(id);
-                //        }
-                //    }
-                //    Console.WriteLine("Press any key to continue...");
-                //    Console.ReadKey();
-                //}
-                //else if (choice.Key == ConsoleKey.NumPad4 || choice.Key == ConsoleKey.D4)
-                //{
-                //    if (!AccountCheck())
-                //    {
-                //        AddAccount(1);
-                //        Current_Account_ID = 1;
-                //        accounts[0].categories_income[0].MoneySpent = accounts[0].Money;
-                //    }
-                //    else if (accounts.Count != 0 && Current_Account_ID == 0)
-                //    {
-                //        Console.WriteLine("You have not chosen the account to work with, please select account first");
-                //        PrintAllAccounts();
-                //        Console.WriteLine("Select ID of the account");
-                //        int id = Int32.Parse(Console.ReadLine());
-                //        SelectAccount(id);
-                //    }
-                //    accounts[Current_Account_ID-1].PrintCategories();
-                //    Console.WriteLine("=================================================");
-                //    CategoryScreen();
-                //    ConsoleKeyInfo category_selection = Console.ReadKey(true);
-                //    if (category_selection.Key != ConsoleKey.NumPad4 && category_selection.Key != ConsoleKey.D4)
-                //    {
-                //        Console.WriteLine("Select category type:\n1.Expense\t2.Income");
-                //        ConsoleKeyInfo cat_type = Console.ReadKey(true);
-                //        if (category_selection.Key == ConsoleKey.NumPad1 || category_selection.Key == ConsoleKey.D1)
-                //        {
-                //            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
-                //                AddCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense);
-                //            else
-                //                AddCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income);
-                //        }
-                //        else if (category_selection.Key == ConsoleKey.NumPad2 || category_selection.Key == ConsoleKey.D2)
-                //        {
-                //            Console.WriteLine("Select category ID to edit:");
-                //            int ID = Int32.Parse(Console.ReadLine());
-                //            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
-                //            {
-                //                accounts[Current_Account_ID - 1].EditCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense, ID);
-                //                accounts[Current_Account_ID - 1].categories_expense = accounts[Current_Account_ID - 1].categories_expense.OrderBy(p => p.ID).ToList();
-                //            }
-                //            else
-                //            {
-                //                accounts[Current_Account_ID - 1].EditCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income, ID);
-                //                accounts[Current_Account_ID - 1].categories_income = accounts[Current_Account_ID - 1].categories_income.OrderBy(p => p.ID).ToList();
-                //            }
-                //        }
-                //        else if (category_selection.Key == ConsoleKey.NumPad3 || category_selection.Key == ConsoleKey.D3)
-                //        {
-                //            Console.WriteLine("Select category ID to delete:");
-                //            int ID = Int32.Parse(Console.ReadLine());
-                //            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
-                //                accounts[Current_Account_ID - 1].DeleteCategory(accounts[Current_Account_ID - 1].categories_expense, ID);
-                //            else
-                //                accounts[Current_Account_ID - 1].DeleteCategory(accounts[Current_Account_ID - 1].categories_income, ID);
+                choice = Console.ReadKey(true);
+                if (choice.Key == ConsoleKey.NumPad1 || choice.Key == ConsoleKey.D1)
+                {
+                    SpendMoney();
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else if (choice.Key == ConsoleKey.NumPad2 || choice.Key == ConsoleKey.D2)
+                {
+                    AddMoney();
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else if (choice.Key == ConsoleKey.NumPad3 || choice.Key == ConsoleKey.D3)
+                {
+                    //print all existing accounts
+                    Console.Clear();
+                    PrintAllAccounts();
+                    //after printing new screen appears allowing work with accounts
+                    AccountScreen();
+                    //selection of the next operation with accounts
+                    ConsoleKeyInfo accountSelection = Console.ReadKey(true);
+                    if (accountSelection.Key == ConsoleKey.NumPad1 || accountSelection.Key == ConsoleKey.D1) {
+                        if (!AccountCheck())
+                            AddAccount(1);
+                        else
+                            AddAccount(accounts.Last().Account_ID + 1);
+                    }
+                    else if (accountSelection.Key == ConsoleKey.D2 || accountSelection.Key == ConsoleKey.NumPad2)
+                    {
+                        if (AccountCheck())
+                        {
+                            Console.WriteLine("Enter the ID of the account you want to edit: ");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            EditAccount(ID);
+                        }                     
+                    }
+                    else if (accountSelection.Key == ConsoleKey.D3 || accountSelection.Key == ConsoleKey.NumPad3)
+                    {
+                        if (AccountCheck()){
+                            Console.WriteLine("Enter the ID of the account you want to delete: ");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            RemoveAccount(ID);
+                        }
+                    }
+                    else if(accountSelection.Key == ConsoleKey.D4 || accountSelection.Key == ConsoleKey.NumPad4)
+                    {
+                        if (AccountCheck())
+                        {
+                            Console.WriteLine("Enter the ID of the account");
+                            int id = Int32.Parse(Console.ReadLine());
+                            SelectAccount(id);
+                        }
+                    }
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else if (choice.Key == ConsoleKey.NumPad4 || choice.Key == ConsoleKey.D4)
+                {
+                    if (!AccountCheck())
+                    {
+                        AddAccount(1);
+                        Current_Account_ID = 1;
+                        accounts[0].categories_income[0].MoneySpent = accounts[0].Money;
+                    }
+                    else if (accounts.Count != 0 && Current_Account_ID == 0)
+                    {
+                        Console.WriteLine("You have not chosen the account to work with, please select account first");
+                        PrintAllAccounts();
+                        Console.WriteLine("Select ID of the account");
+                        int id = Int32.Parse(Console.ReadLine());
+                        SelectAccount(id);
+                    }
+                    accounts[Current_Account_ID-1].PrintCategories();
+                    Console.WriteLine("=================================================");
+                    CategoryScreen();
+                    ConsoleKeyInfo category_selection = Console.ReadKey(true);
+                    if (category_selection.Key != ConsoleKey.NumPad4 && category_selection.Key != ConsoleKey.D4)
+                    {
+                        Console.WriteLine("Select category type:\n1.Expense\t2.Income");
+                        ConsoleKeyInfo cat_type = Console.ReadKey(true);
+                        if (category_selection.Key == ConsoleKey.NumPad1 || category_selection.Key == ConsoleKey.D1)
+                        {
+                            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
+                                AddCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense);
+                            else
+                                AddCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income);
+                        }
+                        else if (category_selection.Key == ConsoleKey.NumPad2 || category_selection.Key == ConsoleKey.D2)
+                        {
+                            Console.WriteLine("Select category ID to edit:");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
+                            {
+                                accounts[Current_Account_ID - 1].EditCategory(accounts[Current_Account_ID - 1].categories_expense, Type.Expense, ID);
+                                accounts[Current_Account_ID - 1].categories_expense = accounts[Current_Account_ID - 1].categories_expense.OrderBy(p => p.ID).ToList();
+                            }
+                            else
+                            {
+                                accounts[Current_Account_ID - 1].EditCategory(accounts[Current_Account_ID - 1].categories_income, Type.Income, ID);
+                                accounts[Current_Account_ID - 1].categories_income = accounts[Current_Account_ID - 1].categories_income.OrderBy(p => p.ID).ToList();
+                            }
+                        }
+                        else if (category_selection.Key == ConsoleKey.NumPad3 || category_selection.Key == ConsoleKey.D3)
+                        {
+                            Console.WriteLine("Select category ID to delete:");
+                            int ID = Int32.Parse(Console.ReadLine());
+                            if (cat_type.Key == ConsoleKey.NumPad1 || cat_type.Key == ConsoleKey.D1)
+                                accounts[Current_Account_ID - 1].DeleteCategory(accounts[Current_Account_ID - 1].categories_expense, ID);
+                            else
+                                accounts[Current_Account_ID - 1].DeleteCategory(accounts[Current_Account_ID - 1].categories_income, ID);
 
-                //        }
+                        }
 
 
-                //    }
+                    }
 
-                //    Console.WriteLine("Press any key to continue...");
-                //    Console.ReadKey();
-                //}
-                //else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
-                //{
-                //    //user selects date type for search
-                //    Console.WriteLine("For date interval - press 1; for annual, monthly or daily - press 2");
-                //    ConsoleKeyInfo type_select = Console.ReadKey(true);
-                //    if (type_select.Key == ConsoleKey.D1 || type_select.Key == ConsoleKey.NumPad1)
-                //    {
-                //        Console.WriteLine("For day interval press 1 for weekly statistics press 2");
-                //        type_select = Console.ReadKey(true);
-                //        if (type_select.Key == ConsoleKey.NumPad1 || type_select.Key == ConsoleKey.D1)
-                //        {
-                //            //date for date 1
-                //            Console.WriteLine("Enter 'from' reference year:");
-                //            int year = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter 'from' reference month:");
-                //            int month = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter 'from' reference day:");
-                //            int day = Int32.Parse(Console.ReadLine());
-                //            DateTime date1 = new DateTime(year, month, day);
-                //            //date for date2
-                //            Console.WriteLine("Enter 'to' reference year:");
-                //             year = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter 'to' reference month:");
-                //             month = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter 'to' reference day:");
-                //             day = Int32.Parse(Console.ReadLine());
-                //            DateTime date2 = new DateTime(year, month, day);
-                //            Statistics(date1,date2);
-                //        }
-                //        else if (type_select.Key == ConsoleKey.NumPad2 || type_select.Key == ConsoleKey.D2)
-                //        {
-                //            //date for date reference
-                //            Console.WriteLine("Enter 'from' reference year:");
-                //            int year = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter 'from' reference month:");
-                //            int month = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter 'from' reference day:");
-                //            int day = Int32.Parse(Console.ReadLine());
-                //            DateTime date1 =  new DateTime(year,month,day);
-                //            DateTime date2 = new DateTime();
-                //            date2 = date1;
-                //            date2=date2.AddDays(7);
-                //            Statistics(date1, date2);
-                //        }
-                //    }
-                //    else if (type_select.Key==ConsoleKey.D2||type_select.Key==ConsoleKey.NumPad2)
-                //    {
-                //        Console.WriteLine("For daily statistics press 1, for monthly press 2 for annual press 3");
-                //        type_select = Console.ReadKey(true);
-                //        if (type_select.Key == ConsoleKey.NumPad1 || type_select.Key == ConsoleKey.D1)
-                //        {
-                //            Console.WriteLine("Enter year:");
-                //            int year = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter month:");
-                //            int month = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter day:");
-                //            int day = Int32.Parse(Console.ReadLine());
-                //            DateTime date1 = new DateTime(year, month, day);
-                //            DateTime date2 = new DateTime(year, month, day,23,59,59);
-                //            Statistics(date1,date2);
-                //        }
-                //        else if (type_select.Key == ConsoleKey.NumPad2 || type_select.Key == ConsoleKey.D2)
-                //        {
-                //            Console.WriteLine("Enter year:");
-                //            int year = Int32.Parse(Console.ReadLine());
-                //            Console.WriteLine("Enter month:");
-                //            int month = Int32.Parse(Console.ReadLine());
-                //            DateTime date1 = new DateTime(year, month, 1);
-                //            DateTime date2 = new DateTime(year, month, 31);
-                //            Statistics(date1,date2);
-                //        }
-                //        else if (type_select.Key == ConsoleKey.NumPad3 || type_select.Key == ConsoleKey.D3)
-                //        {
-                //            Console.WriteLine("Enter year:");
-                //            int year = Int32.Parse(Console.ReadLine());
-                //            DateTime date1 = new DateTime(year, 1, 1);
-                //            DateTime date2 = new DateTime(year, 12, 31);
-                //            Statistics(date1,date2);
-                //        }
-                //    }
-                //    Console.WriteLine("Press any key to continue...");
-                //    Console.ReadKey();
-                //}
-                //else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
-                //{
-                //    ExportToCSV();
-                //    Console.WriteLine("Press any key to continue...");
-                //    Console.ReadKey();
-                //}
-                //else if (choice.Key == ConsoleKey.NumPad7 || choice.Key == ConsoleKey.D7)
-                //{
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else if (choice.Key == ConsoleKey.NumPad5 || choice.Key == ConsoleKey.D5)
+                {
+                    //user selects date type for search
+                    Console.WriteLine("For date interval - press 1; for annual, monthly or daily - press 2");
+                    ConsoleKeyInfo type_select = Console.ReadKey(true);
+                    if (type_select.Key == ConsoleKey.D1 || type_select.Key == ConsoleKey.NumPad1)
+                    {
+                        Console.WriteLine("For day interval press 1 for weekly statistics press 2");
+                        type_select = Console.ReadKey(true);
+                        if (type_select.Key == ConsoleKey.NumPad1 || type_select.Key == ConsoleKey.D1)
+                        {
+                            //date for date 1
+                            Console.WriteLine("Enter 'from' reference year:");
+                            int year = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'from' reference month:");
+                            int month = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'from' reference day:");
+                            int day = Int32.Parse(Console.ReadLine());
+                            DateTime date1 = new DateTime(year, month, day);
+                            //date for date2
+                            Console.WriteLine("Enter 'to' reference year:");
+                             year = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'to' reference month:");
+                             month = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'to' reference day:");
+                             day = Int32.Parse(Console.ReadLine());
+                            DateTime date2 = new DateTime(year, month, day);
+                            Statistics(date1,date2);
+                        }
+                        else if (type_select.Key == ConsoleKey.NumPad2 || type_select.Key == ConsoleKey.D2)
+                        {
+                            //date for date reference
+                            Console.WriteLine("Enter 'from' reference year:");
+                            int year = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'from' reference month:");
+                            int month = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter 'from' reference day:");
+                            int day = Int32.Parse(Console.ReadLine());
+                            DateTime date1 =  new DateTime(year,month,day);
+                            DateTime date2 = new DateTime();
+                            date2 = date1;
+                            date2=date2.AddDays(7);
+                            Statistics(date1, date2);
+                        }
+                    }
+                    else if (type_select.Key==ConsoleKey.D2||type_select.Key==ConsoleKey.NumPad2)
+                    {
+                        Console.WriteLine("For daily statistics press 1, for monthly press 2 for annual press 3");
+                        type_select = Console.ReadKey(true);
+                        if (type_select.Key == ConsoleKey.NumPad1 || type_select.Key == ConsoleKey.D1)
+                        {
+                            Console.WriteLine("Enter year:");
+                            int year = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter month:");
+                            int month = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter day:");
+                            int day = Int32.Parse(Console.ReadLine());
+                            DateTime date1 = new DateTime(year, month, day);
+                            DateTime date2 = new DateTime(year, month, day,23,59,59);
+                            Statistics(date1,date2);
+                        }
+                        else if (type_select.Key == ConsoleKey.NumPad2 || type_select.Key == ConsoleKey.D2)
+                        {
+                            Console.WriteLine("Enter year:");
+                            int year = Int32.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter month:");
+                            int month = Int32.Parse(Console.ReadLine());
+                            DateTime date1 = new DateTime(year, month, 1);
+                            DateTime date2 = new DateTime(year, month, 31);
+                            Statistics(date1,date2);
+                        }
+                        else if (type_select.Key == ConsoleKey.NumPad3 || type_select.Key == ConsoleKey.D3)
+                        {
+                            Console.WriteLine("Enter year:");
+                            int year = Int32.Parse(Console.ReadLine());
+                            DateTime date1 = new DateTime(year, 1, 1);
+                            DateTime date2 = new DateTime(year, 12, 31);
+                            Statistics(date1,date2);
+                        }
+                    }
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else if (choice.Key == ConsoleKey.NumPad6 || choice.Key == ConsoleKey.D6)
+                {
+                    ExportToCSV();
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else if (choice.Key == ConsoleKey.NumPad7 || choice.Key == ConsoleKey.D7)
+                {
 
-                //}
-                //else if (choice.Key == ConsoleKey.NumPad8 || choice.Key == ConsoleKey.D8)
-                //{
-                //    StoreData();
-                //    Console.WriteLine("Press any key to continue...");
-                //    Console.ReadKey();
-                //}
-                //else
-                //    Environment.Exit(0);
+                }
+                else if (choice.Key == ConsoleKey.NumPad8 || choice.Key == ConsoleKey.D8)
+                {
+                    StoreData();
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else
+                    Environment.Exit(0);
             }        
         }
     }
